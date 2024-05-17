@@ -50,7 +50,9 @@ fs.rename(oldDirPath, newDirPath, (error) => {
 
   fs.mkdir(newAppDirPath, { recursive: true }, (error) => {
     if (error) {
-      return console.error(`Error creating new app directory: ${error}`);
+      return console.error(
+        `Error creating new app directory: ${error}`,
+      );
     }
     console.log('New /app directory created.');
 
@@ -64,7 +66,9 @@ fs.rename(oldDirPath, newDirPath, (error) => {
       const layoutPath = path.join(newAppDirPath, '_layout.tsx');
       fs.writeFile(layoutPath, layoutContent, (error) => {
         if (error) {
-          return console.error(`Error creating _layout.tsx: ${error}`);
+          return console.error(
+            `Error creating _layout.tsx: ${error}`,
+          );
         }
         console.log('app/_layout.tsx created.');
       });
