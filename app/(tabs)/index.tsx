@@ -1,12 +1,22 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Link } from 'expo-router';
+import { useEffect } from 'react';
+import { Image, StyleSheet, Platform, Text } from 'react-native';
 
+import { useDispatch } from 'react-redux';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Counter } from '@/features/counter/Counter';
+import { AppDispatch } from '@/redux/store';
+import { loadAreaConfig } from '@/redux/thunk/storage';
 
 export default function HomeScreen() {
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(loadAreaConfig());
+  }, [dispatch]);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -21,6 +31,10 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcome!</ThemedText>
         {/* <HelloWave /> */}
         <Counter />
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <Text>Home Screen</Text>
+        <Link href="/area-selection-modal">Present modal</Link>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>

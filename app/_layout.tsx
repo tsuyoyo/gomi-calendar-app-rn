@@ -9,9 +9,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { store } from '@/redux/store';
+import { AppDispatch, store } from '@/redux/store';
+import { loadAreaConfig } from '@/redux/thunk/storage';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -41,6 +42,13 @@ export default function RootLayout() {
           <Stack.Screen
             name="(tabs)"
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="area-selection-modal"
+            options={{
+              presentation: 'modal',
+              headerTitle: '地域を選択してください',
+            }}
           />
           <Stack.Screen name="+not-found" />
         </Stack>
