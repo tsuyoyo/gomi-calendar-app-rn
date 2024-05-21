@@ -1,8 +1,24 @@
 import { Link, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import { View } from 'react-native';
+import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
 
-export default function Modal() {
+const AreaSelectionScreen: React.FC = () => {
+  const { data, error, isLoading } = useGetAreasQuery();
+
+  useEffect(() => {
+    console.log(`isLoading - ${isLoading}`);
+  }, [isLoading]);
+
+  useEffect(() => {
+    console.log(`data - ${JSON.stringify(data)}`);
+  }, [data]);
+
+  useEffect(() => {
+    console.log(`error - ${JSON.stringify(error)}`);
+  }, [error]);
+
   // If the page was reloaded or navigated to directly, then the modal should be presented as
   // a full screen page. You may need to change the UI to account for this.
   const isPresented = router.canGoBack();
@@ -20,4 +36,6 @@ export default function Modal() {
       <StatusBar style="light" />
     </View>
   );
-}
+};
+
+export default AreaSelectionScreen;

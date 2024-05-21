@@ -12,20 +12,6 @@ export function Counter() {
   );
   const dispatch = useDispatch();
 
-  const { data, error, isLoading } = useGetAreasQuery();
-
-  useEffect(() => {
-    console.log(`isLoading - ${isLoading}`);
-  }, [isLoading]);
-
-  useEffect(() => {
-    console.log(`data - ${JSON.stringify(data)}`);
-  }, [data]);
-
-  useEffect(() => {
-    console.log(`error - ${JSON.stringify(error)}`);
-  }, [error]);
-
   return (
     <>
       <Text>{count}</Text>

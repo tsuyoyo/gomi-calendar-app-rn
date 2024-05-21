@@ -16,15 +16,15 @@ import { store } from '@/redux/store';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export const RootLayout: React.FC = () => {
+  if (__DEV__) {
+    require('./ReactotronConfig');
+  }
+
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
-
-  if (__DEV__) {
-    require('./ReactotronConfig');
-  }
 
   useEffect(() => {
     if (loaded) {
@@ -46,16 +46,18 @@ export default function RootLayout() {
             name="(tabs)"
             options={{ headerShown: false }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="area-selection-modal"
             options={{
               presentation: 'modal',
               headerTitle: '地域を選択してください',
             }}
-          />
+          /> */}
           <Stack.Screen name="+not-found" />
         </Stack>
       </Provider>
     </ThemeProvider>
   );
-}
+};
+
+export default RootLayout;

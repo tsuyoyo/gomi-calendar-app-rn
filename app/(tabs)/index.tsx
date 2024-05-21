@@ -1,14 +1,23 @@
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useEffect } from 'react';
-import { Image, StyleSheet, Platform, Text } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  Text,
+  View,
+  Modal,
+} from 'react-native';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { AreaSelectionModal } from '@/features/area/AreaSelectionModal';
 import { Counter } from '@/features/counter/Counter';
-import { AppDispatch } from '@/redux/store';
+import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
+import { AppDispatch, RootState } from '@/redux/store';
 import { loadAreaConfig } from '@/redux/thunk/storage';
 
 export default function HomeScreen() {
@@ -17,63 +26,82 @@ export default function HomeScreen() {
     dispatch(loadAreaConfig());
   }, [dispatch]);
 
+  const areaConfig = useSelector<RootState>((s) => s.area.areaId);
+
+  const { data } = useGetAreasQuery();
+
+  useEffect(() => {
+    console.log(`data - ${JSON.stringify(data)}`);
+  }, [data]);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        {/* <HelloWave /> */}
-        <Counter />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Text>Home Screen</Text>
-        <Link href="/area-selection-modal">Present modal</Link>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">
-            app/(tabs)/index.tsx
-          </ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in
-          this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">
-          Step 3: Get a fresh start
-        </ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">
-            npm run reset-project
-          </ThemedText>{' '}
-          to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText>{' '}
-          directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <>
+      <AreaSelectionModal
+        isVisible={areaConfig === undefined || areaConfig === null}
+      />
+      <ParallaxScrollView
+        headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+        headerImage={
+          <Image
+            source={require('@/assets/images/partial-react-logo.png')}
+            style={styles.reactLogo}
+          />
+        }
+      >
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Welcome!</ThemedText>
+          {/* <HelloWave /> */}
+          <Counter />
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <Text>Home Screen</Text>
+          <Link href="/area-selection-screen">Present modal</Link>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+          <ThemedText>
+            Edit{' '}
+            <ThemedText type="defaultSemiBold">
+              app/(tabs)/index.tsx
+            </ThemedText>{' '}
+            to see changes. Press{' '}
+            <ThemedText type="defaultSemiBold">
+              {Platform.select({
+                ios: 'cmd + d',
+                android: 'cmd + m',
+              })}
+            </ThemedText>{' '}
+            to open developer tools.
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+          <ThemedText>
+            Tap the Explore tab to learn more about what's included in
+            this starter app.
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.stepContainer}>
+          <ThemedText type="subtitle">
+            Step 3: Get a fresh start
+          </ThemedText>
+          <ThemedText>
+            When you're ready, run{' '}
+            <ThemedText type="defaultSemiBold">
+              npm run reset-project
+            </ThemedText>{' '}
+            to get a fresh{' '}
+            <ThemedText type="defaultSemiBold">app</ThemedText>{' '}
+            directory. This will move the current{' '}
+            <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
+            <ThemedText type="defaultSemiBold">
+              app-example
+            </ThemedText>
+            .
+          </ThemedText>
+        </ThemedView>
+      </ParallaxScrollView>
+    </>
   );
 }
 
@@ -93,5 +121,21 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  noAreaConfig: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalContent: {
+    height: '80%',
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
   },
 });

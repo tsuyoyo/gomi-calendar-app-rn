@@ -1,11 +1,14 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs, router } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 
+import { useSelector } from 'react-redux';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
+import { RootState } from '@/redux/store';
 
-export default function TabLayout() {
+export const TabLayout: React.FC = () => {
   const colorScheme = useColorScheme();
 
   return (
@@ -41,4 +44,6 @@ export default function TabLayout() {
       />
     </Tabs>
   );
-}
+};
+
+export default TabLayout;
