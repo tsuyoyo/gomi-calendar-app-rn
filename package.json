@@ -52,6 +52,8 @@
     "jest-expo": "~51.0.2",
     "prettier": "^3.2.5",
     "react-test-renderer": "18.2.0",
+    "reactotron-react-native": "^5.1.7",
+    "reactotron-redux": "^3.1.9",
     "typescript": "~5.3.3"
   },
   "private": true

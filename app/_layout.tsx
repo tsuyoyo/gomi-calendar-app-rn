@@ -9,10 +9,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { AppDispatch, store } from '@/redux/store';
-import { loadAreaConfig } from '@/redux/thunk/storage';
+import { store } from '@/redux/store';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -22,6 +21,10 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+
+  if (__DEV__) {
+    require('./ReactotronConfig');
+  }
 
   useEffect(() => {
     if (loaded) {
