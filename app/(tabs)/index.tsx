@@ -28,11 +28,11 @@ export default function HomeScreen() {
 
   const areaConfig = useSelector<RootState>((s) => s.area.areaId);
 
-  const { data } = useGetAreasQuery();
+  // const { data } = useGetAreasQuery();
 
-  useEffect(() => {
-    console.log(`data - ${JSON.stringify(data)}`);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(`data - ${JSON.stringify(data)}`);
+  // }, [data]);
 
   return (
     <>

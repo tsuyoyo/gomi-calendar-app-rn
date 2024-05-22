@@ -12,7 +12,7 @@ export const areaApi = createApi({
     baseUrl: BASE_API_URL,
   }),
   endpoints: (builder) => ({
-    getAreas: builder.query<Area[], void>({
+    getAreas: builder.query<{ areas: Area[] }, void>({
       query: () => ({
         url: '/areas',
         method: 'GET',
