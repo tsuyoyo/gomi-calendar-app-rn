@@ -1,0 +1,11 @@
+{
+  "common": {
+    "ok": "OK"
+  },
+  "translation": {
+    "welcome": "Welcome to React and react-i18next"
+  },
+  "area": {
+    "title": "Area config"
+  }
+}

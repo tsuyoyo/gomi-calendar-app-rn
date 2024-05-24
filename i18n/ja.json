@@ -1,0 +1,11 @@
+{
+  "common": {
+    "ok": "OK"
+  },
+  "translation": {
+    "welcome": "ようこそ"
+  },
+  "area": {
+    "title": "地域設定"
+  }
+}

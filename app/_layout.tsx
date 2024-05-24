@@ -13,6 +13,7 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { store } from '@/redux/store';
+import '../i18n/i18n';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -48,13 +49,6 @@ export const RootLayout: React.FC = () => {
               name="(tabs)"
               options={{ headerShown: false }}
             />
-            {/* <Stack.Screen
-            name="area-selection-modal"
-            options={{
-              presentation: 'modal',
-              headerTitle: '地域を選択してください',
-            }}
-          /> */}
             <Stack.Screen name="+not-found" />
           </Stack>
         </Provider>

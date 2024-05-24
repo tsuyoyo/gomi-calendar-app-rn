@@ -1,5 +1,6 @@
 import { Link, router } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Image,
   StyleSheet,
@@ -34,11 +35,20 @@ export default function HomeScreen() {
   //   console.log(`data - ${JSON.stringify(data)}`);
   // }, [data]);
 
+  const { t, i18n } = useTranslation([
+    'common',
+    'translation',
+    'area',
+  ]);
+  const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>(
+    'ja',
+  );
+
   return (
     <>
-      <AreaSelectionModal
+      {/* <AreaSelectionModal
         isVisible={areaConfig === undefined || areaConfig === null}
-      />
+      /> */}
       <ParallaxScrollView
         headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
         headerImage={
@@ -49,7 +59,16 @@ export default function HomeScreen() {
         }
       >
         <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">Welcome!</ThemedText>
+          <ThemedText
+            onPress={() => {
+              const lang = currentLanguage === 'ja' ? 'en' : 'ja';
+              setCurrentLanguage(lang);
+              i18n.changeLanguage(lang);
+            }}
+            type="title"
+          >
+            {t('translation:welcome')}
+          </ThemedText>
           {/* <HelloWave /> */}
           <Counter />
         </ThemedView>
