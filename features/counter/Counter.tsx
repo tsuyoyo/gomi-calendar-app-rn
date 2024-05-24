@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { Button, Text } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment } from './counterSlice';
-import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
 import { RootState } from '@/redux/store';
+import { Button, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrement, increment } from './counterSlice';
 
 export function Counter() {
   const count = useSelector(

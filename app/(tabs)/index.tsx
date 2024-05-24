@@ -2,25 +2,20 @@ import { Link, router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Image,
-  StyleSheet,
-  Platform,
-  Text,
-  View,
-  Modal,
   Alert,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
 } from 'react-native';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { AreaSelectionModal } from '@/features/area/AreaSelectionModal';
 import { Counter } from '@/features/counter/Counter';
-import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
 import { AppDispatch, RootState } from '@/redux/store';
 import { loadAreaConfig } from '@/redux/thunk/storage';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function HomeScreen() {
   const dispatch = useDispatch<AppDispatch>();
