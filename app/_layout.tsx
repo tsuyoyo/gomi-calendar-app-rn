@@ -6,9 +6,10 @@ import {
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-reanimated';
 
+import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { store } from '@/redux/store';
@@ -40,22 +41,24 @@ export const RootLayout: React.FC = () => {
     <ThemeProvider
       value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
-      <Provider store={store}>
-        <Stack>
-          <Stack.Screen
-            name="(tabs)"
-            options={{ headerShown: false }}
-          />
-          {/* <Stack.Screen
+      <RootSiblingParent>
+        <Provider store={store}>
+          <Stack>
+            <Stack.Screen
+              name="(tabs)"
+              options={{ headerShown: false }}
+            />
+            {/* <Stack.Screen
             name="area-selection-modal"
             options={{
               presentation: 'modal',
               headerTitle: '地域を選択してください',
             }}
           /> */}
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </Provider>
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </Provider>
+      </RootSiblingParent>
     </ThemeProvider>
   );
 };

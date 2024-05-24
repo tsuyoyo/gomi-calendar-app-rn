@@ -2,8 +2,8 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { AreaSelectionList } from '@/features/area/AreaSelectionList';
 
+import { AreaSelectionList } from '@/features/area/AreaSelectionList';
 import { RootState } from '@/redux/store';
 
 const AreaSelectionScreen: React.FC = () => {
@@ -33,10 +33,7 @@ const AreaSelectionScreen: React.FC = () => {
       {/* {!isPresented && <Link href="../">Dismiss</Link>} */}
       {/* Native modals have dark backgrounds on iOS, set the status bar to light content. */}
       {/* <StatusBar style="light" /> */}
-      <AreaSelectionList
-        selectedAreaId={selectedArea}
-        onAreaSelected={setSelectedArea}
-      />
+      <AreaSelectionList />
     </View>
   );
 };

@@ -1,19 +1,61 @@
 import { Ionicons } from '@expo/vector-icons';
 import { FlashList } from '@shopify/flash-list';
-import { useEffect } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { router } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import Toast from 'react-native-root-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { ListDivider } from '@/components/ListDivider';
+import { ThemedButton } from '@/components/ThemedButton';
+import { AppPressable } from '@/components/ThemedPressable';
+import { ThemedText } from '@/components/ThemedText';
 import { Area } from '@/data/Area';
 import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
+import { areaSlice } from '@/redux/slice/AreaSlice';
+import { AppDispatch, RootState } from '@/redux/store';
+import { appColors } from '@/styles/appColors';
 
 const styles = StyleSheet.create({
-  areaItem: {
+  areaItemContainer: {
     minHeight: 64,
     width: '100%',
     paddingHorizontal: 16,
     paddingVertical: 8,
     justifyContent: 'center',
+    verticalAlign: 'middle',
+    backgroundColor: appColors.background,
+  },
+  areaItem: {
+    flexDirection: 'row',
+  },
+  areaItemName: {
+    flex: 1,
+    verticalAlign: 'middle',
+  },
+  areaCheck: {
+    justifyContent: 'center',
+    verticalAlign: 'middle',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    width: '100%',
+  },
+  button: {
+    flex: 1,
   },
 });
+
+const CheckIcon: React.FC<{ isVisible: boolean }> = ({
+  isVisible,
+}) =>
+  isVisible ? (
+    <Ionicons
+      style={styles.areaCheck}
+      name="checkmark-sharp"
+      size={24}
+      color={appColors.primary}
+    />
+  ) : null;
 
 const AreaItem: React.FC<{
   area: Area;
@@ -21,50 +63,73 @@ const AreaItem: React.FC<{
   onClicked: () => void;
 }> = ({ area, isSelected, onClicked }) => {
   return (
-    <Pressable
-      style={styles.areaItem}
-      android_ripple={{ color: 'grey' }}
-      onPress={() => {
-        console.log(`onClicked - ${area.name}`);
-        onClicked();
-      }}
+    <AppPressable
+      key={area.id}
+      style={styles.areaItemContainer}
+      onPress={onClicked}
     >
-      {isSelected ? (
-        <Ionicons name="checkmark-circle" size={32} color="green" />
-      ) : null}
-      <Text key={area.id}>{area.name}</Text>
-    </Pressable>
+      <View style={styles.areaItem}>
+        <ThemedText style={styles.areaItemName}>
+          {area.name}
+        </ThemedText>
+        <CheckIcon isVisible={isSelected} />
+      </View>
+    </AppPressable>
   );
 };
 
-export const AreaSelectionList: React.FC<{
-  selectedAreaId?: string | null;
-  onAreaSelected: (areaId: string) => void;
-}> = ({ selectedAreaId, onAreaSelected }) => {
+export const AreaSelectionList: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const areaConfig = useSelector<
+    RootState,
+    string | null | undefined
+  >((s) => s.area.areaId);
+
+  const [selectedArea, setSelectedArea] = useState<
+    string | null | undefined
+  >(areaConfig);
+
   const { data, error, isLoading } = useGetAreasQuery();
 
   useEffect(() => {
     if (error !== undefined) {
-      // Show toast
+      Toast.show('地域情報の取得に失敗しました', {
+        duration: Toast.durations.SHORT,
+      });
     }
-  });
+  }, [error]);
 
   return (
-    <FlashList
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <AreaItem
-          area={item}
-          isSelected={selectedAreaId === item.id}
-          onClicked={() => {
-            onAreaSelected(item.id);
+    <>
+      <FlashList
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <AreaItem
+            area={item}
+            isSelected={selectedArea === item.id}
+            onClicked={() => {
+              setSelectedArea(item.id);
+            }}
+          />
+        )}
+        estimatedItemSize={100}
+        data={data?.areas ?? []}
+        extraData={selectedArea}
+        refreshing={isLoading}
+        ItemSeparatorComponent={() => <ListDivider />}
+      />
+      <View style={styles.buttonContainer}>
+        <ThemedButton
+          style={{ ...styles.button }}
+          text="設定を更新する"
+          disabled={selectedArea === areaConfig}
+          type="filledPrimary"
+          onPress={() => {
+            dispatch(areaSlice.actions.setArea(selectedArea));
+            router.back();
           }}
         />
-      )}
-      estimatedItemSize={100}
-      data={data?.areas ?? []}
-      extraData={selectedAreaId}
-      refreshing={isLoading}
-    />
+      </View>
+    </>
   );
 };
