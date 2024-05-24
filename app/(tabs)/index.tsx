@@ -8,6 +8,7 @@ import {
   Text,
   View,
   Modal,
+  Alert,
 } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,23 +24,34 @@ import { loadAreaConfig } from '@/redux/thunk/storage';
 
 export default function HomeScreen() {
   const dispatch = useDispatch<AppDispatch>();
+  const { t, i18n } = useTranslation([
+    'translation',
+    'common',
+    'home',
+  ]);
+  const areaConfig = useSelector<RootState>((s) => s.area.areaId);
+
   useEffect(() => {
     dispatch(loadAreaConfig());
   }, [dispatch]);
 
-  const areaConfig = useSelector<RootState>((s) => s.area.areaId);
+  useEffect(() => {
+    if (areaConfig === undefined || areaConfig === null) {
+      Alert.alert(
+        t('common:welcome'),
+        t('home:no-area-config-alert'),
+        [
+          {
+            text: t('home:open-area-config'),
+            onPress: () => {
+              router.push('/area-selection-screen');
+            },
+          },
+        ],
+      );
+    }
+  }, [areaConfig, t]);
 
-  // const { data } = useGetAreasQuery();
-
-  // useEffect(() => {
-  //   console.log(`data - ${JSON.stringify(data)}`);
-  // }, [data]);
-
-  const { t, i18n } = useTranslation([
-    'common',
-    'translation',
-    'area',
-  ]);
   const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>(
     'ja',
   );

@@ -1,9 +1,14 @@
 {
   "common": {
-    "ok": "OK"
+    "ok": "OK",
+    "welcome": "Welcome"
   },
   "translation": {
     "welcome": "Welcome to React and react-i18next"
+  },
+  "home": {
+    "no-area-config-alert": "Let us know your area",
+    "open-area-config": "Open area selection"
   },
   "area": {
     "title": "Area config"
