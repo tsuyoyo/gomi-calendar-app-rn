@@ -1,7 +1,8 @@
 {
   "common": {
     "ok": "OK",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "open-by-tap": "Tap here to open"
   },
   "translation": {
     "welcome": "Welcome to React and react-i18next"

@@ -3,6 +3,7 @@ import { HomeComponentType } from '@/data/screen/home/HomeComponentType';
 import { HomeResponse } from '@/data/screen/home/HomeResponse';
 import { FlashList } from '@shopify/flash-list';
 import { ViewProps } from 'react-native';
+import { HomeLinkComponent } from './HomeLinkComponent';
 
 export type HomeContentsListProps = ViewProps & {
   response: HomeResponse;
@@ -19,8 +20,9 @@ const buildHomeComponent = (
       return <ThemedText>Today</ThemedText>;
     case HomeComponentType.SCHEDULE_NEXT:
       return <ThemedText>Next</ThemedText>;
-    case HomeComponentType.LINK:
-      return <ThemedText>Link</ThemedText>;
+    case HomeComponentType.LINK: {
+      return <HomeLinkComponent link={response.links[index]} />;
+    }
   }
 };
 

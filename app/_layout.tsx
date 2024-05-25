@@ -9,10 +9,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { RootSiblingParent } from 'react-native-root-siblings';
-import { Provider } from 'react-redux';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { store } from '@/redux/store';
+import { useTranslation } from 'react-i18next';
+import { RootSiblingParent } from 'react-native-root-siblings';
+import { Provider } from 'react-redux';
 import '../i18n/i18n';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -22,6 +23,9 @@ export const RootLayout: React.FC = () => {
   if (__DEV__) {
     require('./ReactotronConfig');
   }
+
+  const { i18n } = useTranslation([]);
+  i18n.changeLanguage('ja');
 
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({

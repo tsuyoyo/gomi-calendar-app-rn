@@ -1,7 +1,8 @@
 {
   "common": {
     "ok": "OK",
-    "welcome": "ようこそ"
+    "welcome": "ようこそ",
+    "open-by-tap": "タップして開く"
   },
   "translation": {
     "welcome": "ようこそ"
