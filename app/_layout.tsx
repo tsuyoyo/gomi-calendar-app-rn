@@ -11,7 +11,6 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { store } from '@/redux/store';
-import { useTranslation } from 'react-i18next';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import '../i18n/i18n';
@@ -24,8 +23,8 @@ export const RootLayout: React.FC = () => {
     require('./ReactotronConfig');
   }
 
-  const { i18n } = useTranslation([]);
-  i18n.changeLanguage('ja');
+  // const { i18n } = useTranslation([]);
+  // i18n.changeLanguage('ja');
 
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
