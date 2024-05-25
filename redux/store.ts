@@ -1,17 +1,24 @@
+import reactotron from '@/app/ReactotronConfig';
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import { areaApi } from './apiSlice/areaApi';
+import { homeScreenApi } from './apiSlice/homeScreenApi';
+import { infoScreenApi } from './apiSlice/infoScreenApi';
 import areaReducer from './slice/AreaSlice';
-import reactotron from '@/app/ReactotronConfig';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     area: areaReducer,
     [areaApi.reducerPath]: areaApi.reducer,
+    [homeScreenApi.reducerPath]: homeScreenApi.reducer,
+    [infoScreenApi.reducerPath]: infoScreenApi.reducer,    
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(areaApi.middleware),
+    getDefaultMiddleware()
+      .concat(areaApi.middleware)
+      .concat(homeScreenApi.middleware)
+      .concat(infoScreenApi.middleware),
   enhancers: (defaultEnhancers) =>
     __DEV__
       ? defaultEnhancers().concat(reactotron.createEnhancer())
