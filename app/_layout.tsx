@@ -1,16 +1,11 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { store } from '@/redux/store';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
+import { PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { store } from '@/redux/store';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import '../i18n/i18n';
@@ -42,11 +37,13 @@ export const RootLayout: React.FC = () => {
   }
 
   return (
-    <ThemeProvider
-      value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-    >
-      <RootSiblingParent>
-        <Provider store={store}>
+    // <ThemeProvider
+    //   value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+    // >
+
+    <RootSiblingParent>
+      <Provider store={store}>
+        <PaperProvider>
           <Stack>
             <Stack.Screen
               name="(tabs)"
@@ -54,9 +51,9 @@ export const RootLayout: React.FC = () => {
             />
             <Stack.Screen name="+not-found" />
           </Stack>
-        </Provider>
-      </RootSiblingParent>
-    </ThemeProvider>
+        </PaperProvider>
+      </Provider>
+    </RootSiblingParent>
   );
 };
 
