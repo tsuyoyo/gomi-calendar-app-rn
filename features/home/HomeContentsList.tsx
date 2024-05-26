@@ -57,6 +57,8 @@ export const HomeContentsList: React.FC<HomeContentsListProps> = ({
       }
       refreshing={isLoading}
       ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+      ListHeaderComponent={() => <View style={{ height: 12 }} />}
+      ListFooterComponent={() => <View style={{ height: 32 }} />}
     />
   );
 };

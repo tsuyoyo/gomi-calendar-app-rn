@@ -4,7 +4,7 @@ import {
 } from '@/data/screen/home/HomeNextComponent';
 import { openBrowserAsync } from 'expo-web-browser';
 import { StyleSheet, View } from 'react-native';
-import { Button, Card, Text } from 'react-native-paper';
+import { Button, Card, Divider, Text } from 'react-native-paper';
 import { HomeTrashTypeIcon } from './HomeTrashTypeIcon';
 
 const styles = StyleSheet.create({
@@ -77,14 +77,15 @@ export const HomeNextScheduleComponent: React.FC<
 > = ({ nextComponent }) => {
   return (
     <Card style={styles.container}>
-      <Card.Title
-        title={
-          <Text variant="titleMedium" style={{ fontWeight: 'bold' }}>
-            {nextComponent.title}
-          </Text>
-        }
-      />
       <Card.Content>
+        <Text variant="titleMedium" style={{ fontWeight: 'bold' }}>
+          {nextComponent.title}
+        </Text>
+        <Divider
+          style={{
+            marginVertical: 8,
+          }}
+        />
         <Services trashInfos={nextComponent.trashTypes} />
       </Card.Content>
     </Card>

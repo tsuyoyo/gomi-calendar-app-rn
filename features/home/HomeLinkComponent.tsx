@@ -1,17 +1,17 @@
 import { LinkComponent } from '@/data/screen/common/LinkComponent';
-import { appColors } from '@/styles/appColors';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
-import { StyleSheet } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Card, Icon, Text } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
-    paddingVertical: 8,
-    marginBottom: 8,
+    paddingBottom: 16,
   },
   previewContainer: {
-    paddingBottom: 16,
+    paddingBottom: 0,
+    paddingHorizontal: 0,
+    paddingTop: 0,
   },
 });
 
@@ -29,18 +29,14 @@ export const HomeLinkComponent: React.FC<HomeLinkComponentProps> = ({
         text={link.url}
         enableAnimation
         renderTitle={() => (
-          <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
-            {link.title}
-          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Icon source="information-outline" size={24} />
+            <Text variant="bodyLarge" style={{ fontWeight: 'bold' }}>
+              {link.title}
+            </Text>
+          </View>
         )}
-        renderText={(text) => (
-          <Text
-            variant="titleSmall"
-            style={{ color: appColors.linkTextColor }}
-          >
-            {text}
-          </Text>
-        )}
+        renderText={() => null}
       />
     </Card>
   );

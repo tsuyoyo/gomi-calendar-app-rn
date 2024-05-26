@@ -1,4 +1,3 @@
-import { TrashType } from '@/data/TrashType';
 import {
   HomeTodayComponent,
   HomeTodayComponentTrashInfo,
@@ -6,7 +5,7 @@ import {
 import { openBrowserAsync } from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
-import { Button, Card, Text } from 'react-native-paper';
+import { Button, Card, Divider, Text } from 'react-native-paper';
 import { HomeTrashTypeIcon } from './HomeTrashTypeIcon';
 
 const styles = StyleSheet.create({
@@ -83,51 +82,14 @@ const Services: React.FC<{
 export const HomeTodayScheduleComponent: React.FC<
   HomeTodayScheduleComponentProps
 > = ({ todayComponent }) => {
-  const trashTypes: HomeTodayComponentTrashInfo[] = [
-    {
-      type: TrashType.BURNABLE,
-      name: '燃えるゴミ',
-      link: {
-        text: 'ガイド',
-        url: 'https://www.city.narashino.lg.jp/material/files/group/35/R6dashikataguidebook_02.pdf',
-      },
-    },
-    {
-      type: TrashType.RECYCLABLE,
-      name: '再利用可能ゴミ',
-      link: {
-        text: 'ガイド',
-        url: 'https://www.city.narashino.lg.jp/material/files/group/35/R6dashikataguidebook_04.pdf',
-      },
-    },
-    {
-      type: TrashType.HARMFUL,
-      name: '危険物',
-      link: {
-        text: 'ガイド',
-        url: 'https://www.city.narashino.lg.jp/material/files/group/35/R6dashikataguidebook_04.pdf',
-      },
-    },
-    {
-      type: TrashType.INCOMBUSTIBLE,
-      name: '燃えないごみ',
-      link: {
-        text: 'ガイド',
-        url: 'https://www.city.narashino.lg.jp/material/files/group/35/R6dashikataguidebook_04.pdf',
-      },
-    },
-  ];
   return (
     <Card style={styles.container}>
-      <Card.Title
-        title={
-          <Text variant="titleMedium" style={{ fontWeight: 'bold' }}>
-            {todayComponent.title}
-          </Text>
-        }
-      />
       <Card.Content>
-        <Services trashInfos={trashTypes} />
+        <Text variant="titleMedium" style={{ fontWeight: 'bold' }}>
+          {todayComponent.title}
+        </Text>
+        <Divider style={{ marginVertical: 8 }} />
+        <Services trashInfos={todayComponent.trashTypes} />
       </Card.Content>
     </Card>
   );
