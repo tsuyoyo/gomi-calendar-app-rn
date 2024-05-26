@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, StatusBar, StyleSheet, View } from 'react-native';
+import { Alert, StatusBar, StyleSheet } from 'react-native';
 
 import { HomeContentsList } from '@/features/home/HomeContentsList';
 import { useLazyGetHomeScreenQuery } from '@/redux/apiSlice/homeScreenApi';
@@ -63,7 +63,6 @@ export default function HomeScreen() {
   const statusBarHeight = StatusBar.currentHeight;
   return (
     <>
-      <View style={{ height: statusBarHeight }}></View>
       <HomeContentsList response={data} isLoading={isFetching} />
     </>
   );

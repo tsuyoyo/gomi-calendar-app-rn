@@ -1,9 +1,11 @@
-import { ThemedText } from '@/components/ThemedText';
 import { HomeComponentType } from '@/data/screen/home/HomeComponentType';
 import { HomeResponse } from '@/data/screen/home/HomeResponse';
 import { FlashList } from '@shopify/flash-list';
-import { ViewProps } from 'react-native';
+import { View, ViewProps } from 'react-native';
+import { HomeAreaDateComponent } from './HomeAreaDateComponent';
 import { HomeLinkComponent } from './HomeLinkComponent';
+import { HomeNextScheduleComponent } from './HomeNextScheduleComponent';
+import { HomeTodayScheduleComponent } from './HomeTodayScheduleComponent';
 
 export type HomeContentsListProps = ViewProps & {
   response: HomeResponse;
@@ -16,13 +18,26 @@ const buildHomeComponent = (
   index: number,
 ) => {
   switch (type) {
+    case HomeComponentType.AREA_DATE:
+      return (
+        <HomeAreaDateComponent
+          data={response.areaDateComponent[index]}
+        />
+      );
     case HomeComponentType.SCHEDULE_TODAY:
-      return <ThemedText>Today</ThemedText>;
+      return (
+        <HomeTodayScheduleComponent
+          todayComponent={response.todayComponents[index]}
+        />
+      );
     case HomeComponentType.SCHEDULE_NEXT:
-      return <ThemedText>Next</ThemedText>;
-    case HomeComponentType.LINK: {
+      return (
+        <HomeNextScheduleComponent
+          nextComponent={response.nextComponents[index]}
+        />
+      );
+    case HomeComponentType.LINK:
       return <HomeLinkComponent link={response.links[index]} />;
-    }
   }
 };
 
@@ -41,6 +56,7 @@ export const HomeContentsList: React.FC<HomeContentsListProps> = ({
         buildHomeComponent(response, item.type, item.index)
       }
       refreshing={isLoading}
+      ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
     />
   );
 };

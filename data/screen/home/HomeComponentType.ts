@@ -1,5 +1,6 @@
 export enum HomeComponentType {
-  SCHEDULE_TODAY = 1,
-  SCHEDULE_NEXT = 2,
-  LINK = 3,
+  AREA_DATE = 1,
+  SCHEDULE_TODAY = 2,
+  SCHEDULE_NEXT = 3,
+  LINK = 4,
 }

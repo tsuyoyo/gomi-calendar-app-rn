@@ -9,7 +9,8 @@
   },
   "home": {
     "no-area-config-alert": "Let us know your area",
-    "open-area-config": "Open area selection"
+    "open-area-config": "Open area selection",
+    "no-collection-today": "No service today"
   },
   "area": {
     "title": "Area config"

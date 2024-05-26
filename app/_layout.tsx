@@ -4,7 +4,8 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
-import { PaperProvider } from 'react-native-paper';
+import { View } from 'react-native';
+import { Icon, PaperProvider, Text } from 'react-native-paper';
 import 'react-native-reanimated';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
@@ -47,7 +48,21 @@ export const RootLayout: React.FC = () => {
           <Stack>
             <Stack.Screen
               name="(tabs)"
-              options={{ headerShown: false }}
+              options={{
+                headerShown: true,
+                headerTitle: '',
+                headerLeft: () => (
+                  <View style={{ flexDirection: 'row' }}>
+                    <Icon source="trash-can-outline" size={24} />
+                    <Text
+                      variant="titleMedium"
+                      style={{ marginStart: 16 }}
+                    >
+                      習志野市ゴミアプリ
+                    </Text>
+                  </View>
+                ),
+              }}
             />
             <Stack.Screen name="+not-found" />
           </Stack>

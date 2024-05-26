@@ -9,7 +9,8 @@
   },
   "home": {
     "no-area-config-alert": "まずは地域設定をしてください",
-    "open-area-config": "地域設定を開く"
+    "open-area-config": "地域設定を開く",
+    "no-collection-today": "今日の回収はありません"
   },
   "area": {
     "title": "地域設定"

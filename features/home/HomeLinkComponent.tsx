@@ -6,7 +6,7 @@ import { Card, Text } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     paddingVertical: 8,
     marginBottom: 8,
   },
