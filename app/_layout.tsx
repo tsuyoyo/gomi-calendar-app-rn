@@ -6,7 +6,12 @@ import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
-import { Icon, PaperProvider, Text } from 'react-native-paper';
+import {
+  MD3LightTheme as DefaultTheme,
+  Icon,
+  PaperProvider,
+  Text,
+} from 'react-native-paper';
 import 'react-native-reanimated';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
@@ -14,6 +19,17 @@ import '../i18n/i18n';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const theme = {
+  ...DefaultTheme,
+  // myOwnProperty: true,
+  colors: {
+    ...DefaultTheme.colors,
+    // primary: appColors.primary,
+    // secondary: appColors.secondary,
+    // tertiary: '#a1b2c3',
+  },
+};
 
 export const RootLayout: React.FC = () => {
   if (__DEV__) {
@@ -41,7 +57,7 @@ export const RootLayout: React.FC = () => {
   return (
     <RootSiblingParent>
       <Provider store={store}>
-        <PaperProvider>
+        <PaperProvider theme={theme}>
           <Stack>
             <Stack.Screen
               name="(tabs)"

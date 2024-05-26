@@ -2,6 +2,7 @@ import {
   HomeNextComponent,
   HomeNextComponentTrashInfo,
 } from '@/data/screen/home/HomeNextComponent';
+import { appColors } from '@/styles/appColors';
 import { openBrowserAsync } from 'expo-web-browser';
 import { StyleSheet, View } from 'react-native';
 import { Button, Card, Divider, Text } from 'react-native-paper';
@@ -55,6 +56,8 @@ const Services: React.FC<{
         {linkInfo !== undefined ? (
           <Button
             style={styles.trashName}
+            textColor={appColors.linkTextColor}
+            labelStyle={{ fontSize: 16 }}
             mode="text"
             onPress={() => openBrowserAsync(linkInfo.url)}
           >

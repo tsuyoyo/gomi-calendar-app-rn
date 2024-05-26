@@ -6,6 +6,7 @@ import { HomeAreaDateComponent } from './HomeAreaDateComponent';
 import { HomeLinkComponent } from './HomeLinkComponent';
 import { HomeNextScheduleComponent } from './HomeNextScheduleComponent';
 import { HomeTodayScheduleComponent } from './HomeTodayScheduleComponent';
+import { HomeWeeklyScheduleComponent } from './HomeWeeklyScheduleComponent';
 
 export type HomeContentsListProps = ViewProps & {
   response: HomeResponse;
@@ -34,6 +35,12 @@ const buildHomeComponent = (
       return (
         <HomeNextScheduleComponent
           nextComponent={response.nextComponents[index]}
+        />
+      );
+    case HomeComponentType.WEEKLY_SCHEDULE:
+      return (
+        <HomeWeeklyScheduleComponent
+          schedule={response.weeklyScheduleComponents[index]}
         />
       );
     case HomeComponentType.LINK:

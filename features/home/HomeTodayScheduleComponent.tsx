@@ -2,6 +2,7 @@ import {
   HomeTodayComponent,
   HomeTodayComponentTrashInfo,
 } from '@/data/screen/home/HomeTodayComponent';
+import { appColors } from '@/styles/appColors';
 import { openBrowserAsync } from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -47,6 +48,7 @@ const TrashInfo: React.FC<{ info: HomeTodayComponentTrashInfo }> = ({
       {linkInfo !== undefined ? (
         <Button
           style={styles.trashName}
+          textColor={appColors.linkTextColor}
           mode="text"
           onPress={() => openBrowserAsync(linkInfo.url)}
         >
@@ -75,7 +77,7 @@ const Services: React.FC<{
     <NoTrashCollection />
   ) : (
     trashInfos.map((type) => (
-      <TrashInfo key={type.toString()} info={type} />
+      <TrashInfo key={type.type.toString()} info={type} />
     ))
   );
 
