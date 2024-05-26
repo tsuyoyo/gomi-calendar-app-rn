@@ -1,21 +1,18 @@
-import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Alert, StatusBar, StyleSheet } from 'react-native';
-
 import { HomeContentsList } from '@/features/home/HomeContentsList';
 import { useLazyGetHomeScreenQuery } from '@/redux/apiSlice/homeScreenApi';
 import { AppDispatch, RootState } from '@/redux/store';
 import { loadAreaConfig } from '@/redux/thunk/storage';
+import { router } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button, Dialog, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function HomeScreen() {
   const dispatch = useDispatch<AppDispatch>();
-  const { t, i18n } = useTranslation([
-    'translation',
-    'common',
-    'home',
-  ]);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+
+  const { t } = useTranslation(['common', 'home']);
   const areaConfig = useSelector<
     RootState,
     string | undefined | null
@@ -29,152 +26,45 @@ export default function HomeScreen() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (areaConfig !== undefined && areaConfig !== null) {
-      trigger(areaConfig);
+    if (areaConfig === undefined) {
+      // Do nothing, because it's not been loaded the data from storage yet.
+    } else if (areaConfig === null) {
+      setIsDialogVisible(true);
     } else {
-      Alert.alert(
-        t('common:welcome'),
-        t('home:no-area-config-alert'),
-        [
-          {
-            text: t('home:open-area-config'),
-            onPress: () => {
-              router.push('/area-selection-screen');
-            },
-          },
-        ],
-      );
+      trigger(areaConfig);
+      setIsDialogVisible(false);
     }
   }, [areaConfig, t, trigger]);
 
+  const openAreaConfig = useCallback(() => {
+    router.push('/area-selection-screen');
+    setIsDialogVisible(false);
+  }, []);
+
   const { data, error, isError, isLoading, isFetching } = result;
 
-  useEffect(() => {
-    console.log(JSON.stringify(data));
-  }, [data]);
-
-  const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>(
-    'ja',
-  );
+  if (isDialogVisible) {
+    return (
+      <Dialog visible={isDialogVisible} onDismiss={openAreaConfig}>
+        <Dialog.Title>{t('common:welcome')}</Dialog.Title>
+        <Dialog.Content>
+          <Text variant="bodyMedium">
+            {t('home:no-area-config-alert')}
+          </Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={openAreaConfig}>{t('common:ok')}</Button>
+        </Dialog.Actions>
+      </Dialog>
+    );
+  }
 
   if (data === undefined) {
     return null;
   }
-  const statusBarHeight = StatusBar.currentHeight;
   return (
     <>
       <HomeContentsList response={data} isLoading={isFetching} />
     </>
   );
-
-  // return (
-  //   <>
-  //     <ParallaxScrollView
-  //       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-  //       headerImage={
-  //         <Image
-  //           source={require('@/assets/images/partial-react-logo.png')}
-  //           style={styles.reactLogo}
-  //         />
-  //       }
-  //     >
-  //       <ThemedView style={styles.titleContainer}>
-  //         <ThemedText
-  //           onPress={() => {
-  //             const lang = currentLanguage === 'ja' ? 'en' : 'ja';
-  //             setCurrentLanguage(lang);
-  //             i18n.changeLanguage(lang);
-  //           }}
-  //           type="title"
-  //         >
-  //           {t('translation:welcome')}
-  //         </ThemedText>
-  //         {/* <HelloWave /> */}
-  //         <Counter />
-  //       </ThemedView>
-  //       <ThemedView style={styles.stepContainer}>
-  //         <Text>Home Screen</Text>
-  //         <Link href="/area-selection-screen">Present modal</Link>
-  //       </ThemedView>
-  //       <ThemedView style={styles.stepContainer}>
-  //         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-  //         <ThemedText>
-  //           Edit{' '}
-  //           <ThemedText type="defaultSemiBold">
-  //             app/(tabs)/index.tsx
-  //           </ThemedText>{' '}
-  //           to see changes. Press{' '}
-  //           <ThemedText type="defaultSemiBold">
-  //             {Platform.select({
-  //               ios: 'cmd + d',
-  //               android: 'cmd + m',
-  //             })}
-  //           </ThemedText>{' '}
-  //           to open developer tools.
-  //         </ThemedText>
-  //       </ThemedView>
-  //       <ThemedView style={styles.stepContainer}>
-  //         <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-  //         <ThemedText>
-  //           Tap the Explore tab to learn more about what's included in
-  //           this starter app.
-  //         </ThemedText>
-  //       </ThemedView>
-  //       <ThemedView style={styles.stepContainer}>
-  //         <ThemedText type="subtitle">
-  //           Step 3: Get a fresh start
-  //         </ThemedText>
-  //         <ThemedText>
-  //           When you're ready, run{' '}
-  //           <ThemedText type="defaultSemiBold">
-  //             npm run reset-project
-  //           </ThemedText>{' '}
-  //           to get a fresh{' '}
-  //           <ThemedText type="defaultSemiBold">app</ThemedText>{' '}
-  //           directory. This will move the current{' '}
-  //           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-  //           <ThemedText type="defaultSemiBold">
-  //             app-example
-  //           </ThemedText>
-  //           .
-  //         </ThemedText>
-  //       </ThemedView>
-  //     </ParallaxScrollView>
-  //   </>
-  // );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-  noAreaConfig: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  modalContent: {
-    height: '80%',
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: 0,
-  },
-});

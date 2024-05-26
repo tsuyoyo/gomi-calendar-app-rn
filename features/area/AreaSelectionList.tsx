@@ -1,10 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
-import { FlashList } from '@shopify/flash-list';
-import { router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Toast from 'react-native-root-toast';
-import { useDispatch, useSelector } from 'react-redux';
 import { ListDivider } from '@/components/ListDivider';
 import { ThemedButton } from '@/components/ThemedButton';
 import { AppPressable } from '@/components/ThemedPressable';
@@ -13,7 +6,16 @@ import { Area } from '@/data/Area';
 import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
 import { areaSlice } from '@/redux/slice/AreaSlice';
 import { AppDispatch, RootState } from '@/redux/store';
+import { storeAreaConfig } from '@/redux/thunk/storage';
 import { appColors } from '@/styles/appColors';
+import { Ionicons } from '@expo/vector-icons';
+import { FlashList } from '@shopify/flash-list';
+import { router } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { StyleSheet, View } from 'react-native';
+import Toast from 'react-native-root-toast';
+import { useDispatch, useSelector } from 'react-redux';
 
 const styles = StyleSheet.create({
   areaItemContainer: {
@@ -80,6 +82,8 @@ const AreaItem: React.FC<{
 
 export const AreaSelectionList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation(['area']);
+
   const areaConfig = useSelector<
     RootState,
     string | null | undefined
@@ -93,11 +97,11 @@ export const AreaSelectionList: React.FC = () => {
 
   useEffect(() => {
     if (error !== undefined) {
-      Toast.show('地域情報の取得に失敗しました', {
+      Toast.show(t('area:fetch-error'), {
         duration: Toast.durations.SHORT,
       });
     }
-  }, [error]);
+  }, [error, t]);
 
   return (
     <>
@@ -121,11 +125,14 @@ export const AreaSelectionList: React.FC = () => {
       <View style={styles.buttonContainer}>
         <ThemedButton
           style={{ ...styles.button }}
-          text="設定を更新する"
+          text={t('area:apply-selection')}
           disabled={selectedArea === areaConfig}
           type="filledPrimary"
           onPress={() => {
-            dispatch(areaSlice.actions.setArea(selectedArea));
+            if (selectedArea !== undefined && selectedArea !== null) {
+              dispatch(storeAreaConfig({ areaId: selectedArea }));
+              dispatch(areaSlice.actions.setArea(selectedArea));
+            }
             router.back();
           }}
         />

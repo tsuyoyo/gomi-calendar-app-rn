@@ -20,7 +20,7 @@ export const RootLayout: React.FC = () => {
     require('./ReactotronConfig');
   }
 
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(['common', 'area']);
   // i18n.changeLanguage('ja');
 
   const colorScheme = useColorScheme();
@@ -39,10 +39,6 @@ export const RootLayout: React.FC = () => {
   }
 
   return (
-    // <ThemeProvider
-    //   value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-    // >
-
     <RootSiblingParent>
       <Provider store={store}>
         <PaperProvider>
@@ -69,6 +65,13 @@ export const RootLayout: React.FC = () => {
                     </Text>
                   </View>
                 ),
+              }}
+            />
+            <Stack.Screen
+              name="area-selection-screen"
+              options={{
+                headerShown: true,
+                headerTitle: t('area:title'),
               }}
             />
             <Stack.Screen name="+not-found" />

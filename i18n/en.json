@@ -9,11 +9,13 @@
     "welcome": "Welcome to React and react-i18next"
   },
   "home": {
-    "no-area-config-alert": "Let us know your area",
+    "no-area-config-alert": "You haven't selected the area yet. Let's selected your area to use this app.",
     "open-area-config": "Open area selection",
     "no-collection-today": "No service today"
   },
   "area": {
-    "title": "Area config"
+    "title": "Select area",
+    "apply-selection": "Apply",
+    "fetch-error": "Failed to fetch area data"
   }
 }

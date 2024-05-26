@@ -14,6 +14,8 @@
     "no-collection-today": "今日の回収はありません"
   },
   "area": {
-    "title": "地域設定"
+    "title": "地域を選択してください",
+    "apply-selection": "設定を更新する",
+    "fetch-error": "地域情報の取得に失敗しました"
   }
 }
