@@ -47,7 +47,10 @@ const Services: React.FC<{
   trashInfos.map((info) => {
     const linkInfo = info.link;
     return (
-      <View key={info.type.toString()} style={styles.trashContainer}>
+      <View
+        key={`next-${info.type.toString()}`}
+        style={styles.trashContainer}
+      >
         <HomeTrashTypeIcon type={info.type} />
         {linkInfo !== undefined ? (
           <Button
@@ -62,7 +65,7 @@ const Services: React.FC<{
             {info.name}
           </Text>
         )}
-        <Text variant="bodyLarge" style={styles.collectionDate}>
+        <Text variant="bodyMedium" style={styles.collectionDate}>
           {info.nextDate}
         </Text>
       </View>

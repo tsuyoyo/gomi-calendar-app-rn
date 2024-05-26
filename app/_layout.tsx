@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { Icon, PaperProvider, Text } from 'react-native-paper';
 import 'react-native-reanimated';
@@ -19,7 +20,7 @@ export const RootLayout: React.FC = () => {
     require('./ReactotronConfig');
   }
 
-  // const { i18n } = useTranslation([]);
+  const { t } = useTranslation(['common']);
   // i18n.changeLanguage('ja');
 
   const colorScheme = useColorScheme();
@@ -52,13 +53,19 @@ export const RootLayout: React.FC = () => {
                 headerShown: true,
                 headerTitle: '',
                 headerLeft: () => (
-                  <View style={{ flexDirection: 'row' }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                    }}
+                  >
                     <Icon source="trash-can-outline" size={24} />
                     <Text
                       variant="titleMedium"
                       style={{ marginStart: 16 }}
                     >
-                      習志野市ゴミアプリ
+                      {t('app-title')}
                     </Text>
                   </View>
                 ),

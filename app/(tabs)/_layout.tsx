@@ -1,20 +1,14 @@
-import { Tabs, router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import { Tabs } from 'expo-router';
+import React from 'react';
 
-import { useSelector } from 'react-redux';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
-import { RootState } from '@/redux/store';
+import { appColors } from '@/styles/appColors';
 
 export const TabLayout: React.FC = () => {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: appColors.primary,
         headerShown: false,
       }}
     >
