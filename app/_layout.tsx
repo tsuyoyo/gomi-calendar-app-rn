@@ -90,6 +90,13 @@ export const RootLayout: React.FC = () => {
                 headerTitle: t('area:title'),
               }}
             />
+            <Stack.Screen
+              name="oss-license-screen"
+              options={{
+                headerShown: true,
+                headerTitle: 'OSS License',
+              }}
+            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </PaperProvider>

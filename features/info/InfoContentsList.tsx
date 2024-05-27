@@ -1,6 +1,7 @@
 import { InfoComponentType } from '@/data/screen/info/InfoComponentType';
 import { InfoResponse } from '@/data/screen/info/InfoResponse';
 import { FlashList } from '@shopify/flash-list';
+import { router } from 'expo-router';
 import { ViewProps } from 'react-native';
 import { Divider, List } from 'react-native-paper';
 import { InfoAreaConfigComponent } from './InfoAreaConfigComponent';
@@ -22,7 +23,12 @@ const buildInfoComponent = (
     case InfoComponentType.AREA_CONFIG:
       return <InfoAreaConfigComponent />;
     case InfoComponentType.OSS_LICENSE:
-      return <List.Item title="Oss license" />;
+      return (
+        <List.Item
+          title="Oss license"
+          onPress={() => router.push('oss-license-screen')}
+        />
+      );
   }
 };
 
