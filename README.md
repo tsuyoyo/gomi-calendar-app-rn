@@ -8,3 +8,9 @@
 ```
 $ license-checker --production  --json --out ./licenses.json
 ```
+
+### How to build the development binary
+
+```
+$ eas build -p android --profile development
+```

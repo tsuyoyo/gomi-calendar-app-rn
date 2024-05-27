@@ -18,6 +18,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
     "@flyerhq/react-native-link-preview": "^1.6.0",
+    "@os-team/i18next-react-native-language-detector": "^1.0.34",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/native": "^6.0.2",
     "@reduxjs/toolkit": "^2.2.5",
@@ -25,8 +26,10 @@
     "eslint-plugin-unused-imports": "^3.2.0",
     "expo": "~51.0.8",
     "expo-constants": "~16.0.1",
+    "expo-dev-client": "~4.0.14",
     "expo-font": "~12.0.5",
     "expo-linking": "~6.3.1",
+    "expo-localization": "~15.0.3",
     "expo-router": "~3.5.14",
     "expo-splash-screen": "~0.27.4",
     "expo-status-bar": "~1.12.1",

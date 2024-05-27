@@ -1,6 +1,6 @@
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { store } from '@/redux/store';
 import { useFonts } from 'expo-font';
+import { useLocales } from 'expo-localization';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
@@ -35,11 +35,20 @@ export const RootLayout: React.FC = () => {
   if (__DEV__) {
     require('./ReactotronConfig');
   }
+  const { t, i18n } = useTranslation(['common', 'area']);
 
-  const { t } = useTranslation(['common', 'area']);
-  // i18n.changeLanguage('ja');
+  const locales = useLocales();
 
-  const colorScheme = useColorScheme();
+  useEffect(() => {
+    if (locales.length > 0) {
+      const langCode = locales[0].languageCode;
+      if (langCode !== null) {
+        i18n.changeLanguage(langCode);
+      }
+    }
+    console.log(`i18n.language - ${locales[0].languageCode}`);
+  }, [i18n, i18n.language, locales]);
+
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
