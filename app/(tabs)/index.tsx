@@ -17,9 +17,7 @@ export default function HomeScreen() {
     RootState,
     string | undefined | null
   >((s) => s.area.areaId);
-
-  const [trigger, result, lastPromiseInfo] =
-    useLazyGetHomeScreenQuery();
+  const [trigger, result] = useLazyGetHomeScreenQuery();
 
   useEffect(() => {
     dispatch(loadAreaConfig());
