@@ -2,12 +2,10 @@ import {
   HomeTodayComponent,
   HomeTodayComponentTrashInfo,
 } from '@/data/screen/home/HomeTodayComponent';
-import { appColors } from '@/styles/appColors';
-import { openBrowserAsync } from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
-import { Button, Card, Divider, Text } from 'react-native-paper';
-import { HomeTrashTypeIcon } from './HomeTrashTypeIcon';
+import { StyleSheet } from 'react-native';
+import { Card, Divider, Text } from 'react-native-paper';
+import { HomeTrashInfoComponent } from './HomeTrashInfoComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,31 +36,6 @@ type HomeTodayScheduleComponentProps = {
   todayComponent: HomeTodayComponent;
 };
 
-const TrashInfo: React.FC<{ info: HomeTodayComponentTrashInfo }> = ({
-  info,
-}) => {
-  const linkInfo = info.link;
-  return (
-    <View style={styles.trashContainer}>
-      <HomeTrashTypeIcon type={info.type} />
-      {linkInfo !== undefined ? (
-        <Button
-          style={styles.trashName}
-          textColor={appColors.linkTextColor}
-          mode="text"
-          onPress={() => openBrowserAsync(linkInfo.url)}
-        >
-          {info.name}
-        </Button>
-      ) : (
-        <Text variant="bodyLarge" style={styles.trashName}>
-          {info.name}
-        </Text>
-      )}
-    </View>
-  );
-};
-
 const NoTrashCollection: React.FC = () => {
   const { t } = useTranslation(['home']);
   return (
@@ -77,7 +50,12 @@ const Services: React.FC<{
     <NoTrashCollection />
   ) : (
     trashInfos.map((type) => (
-      <TrashInfo key={type.type.toString()} info={type} />
+      <HomeTrashInfoComponent
+        key={`today-${type.type.toString()}`}
+        trashType={type.type}
+        trashTypeName={type.name}
+        guideUrl={type.link?.url}
+      />
     ))
   );
 

@@ -3,9 +3,9 @@ import {
   HomeWeeklyScheduleTrashTypeInfo,
 } from '@/data/screen/home/HomeWeeklyScheduleComponent';
 import { openBrowserAsync } from 'expo-web-browser';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button, Card, Divider, Text } from 'react-native-paper';
-import { HomeTrashTypeIcon } from './HomeTrashTypeIcon';
+import { HomeTrashInfoComponent } from './HomeTrashInfoComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,25 +38,17 @@ type HomeWeeklyScheduleComponentProps = {
   schedule: HomeWeeklyScheduleComponentData;
 };
 
-const TrashInfo: React.FC<{
-  info: HomeWeeklyScheduleTrashTypeInfo;
-}> = ({ info }) => {
-  return (
-    <View style={styles.trashContainer}>
-      <HomeTrashTypeIcon type={info.type} />
-      <Text variant="bodyLarge" style={styles.trashName}>
-        {info.name}
-      </Text>
-      <Text variant="bodyLarge">{info.schedule}</Text>
-    </View>
-  );
-};
-
 const Services: React.FC<{
   trashInfos: HomeWeeklyScheduleTrashTypeInfo[];
 }> = ({ trashInfos }) =>
   trashInfos.map((type) => (
-    <TrashInfo key={type.type.toString()} info={type} />
+    <HomeTrashInfoComponent
+      key={`weekly-${type.type.toString()}`}
+      trashType={type.type}
+      trashTypeName={type.name}
+      guideUrl={type.guideUrl}
+      schedule={type.schedule}
+    />
   ));
 
 export const HomeWeeklyScheduleComponent: React.FC<

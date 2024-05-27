@@ -5,6 +5,7 @@ export type HomeWeeklyScheduleTrashTypeInfo = {
   type: TrashType;
   name: string;
   schedule: string;
+  guideUrl: string;
 };
 
 export type HomeWeeklyScheduleComponent = {

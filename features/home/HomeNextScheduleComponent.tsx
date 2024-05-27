@@ -2,11 +2,9 @@ import {
   HomeNextComponent,
   HomeNextComponentTrashInfo,
 } from '@/data/screen/home/HomeNextComponent';
-import { appColors } from '@/styles/appColors';
-import { openBrowserAsync } from 'expo-web-browser';
-import { StyleSheet, View } from 'react-native';
-import { Button, Card, Divider, Text } from 'react-native-paper';
-import { HomeTrashTypeIcon } from './HomeTrashTypeIcon';
+import { StyleSheet } from 'react-native';
+import { Card, Divider, Text } from 'react-native-paper';
+import { HomeTrashInfoComponent } from './HomeTrashInfoComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,32 +44,14 @@ const Services: React.FC<{
   trashInfos: HomeNextComponentTrashInfo[];
 }> = ({ trashInfos }) =>
   trashInfos.map((info) => {
-    const linkInfo = info.link;
     return (
-      <View
+      <HomeTrashInfoComponent
         key={`next-${info.type.toString()}`}
-        style={styles.trashContainer}
-      >
-        <HomeTrashTypeIcon type={info.type} />
-        {linkInfo !== undefined ? (
-          <Button
-            style={styles.trashName}
-            textColor={appColors.linkTextColor}
-            labelStyle={{ fontSize: 16 }}
-            mode="text"
-            onPress={() => openBrowserAsync(linkInfo.url)}
-          >
-            {info.name}
-          </Button>
-        ) : (
-          <Text variant="bodyLarge" style={styles.trashName}>
-            {info.name}
-          </Text>
-        )}
-        <Text variant="bodyMedium" style={styles.collectionDate}>
-          {info.nextDate}
-        </Text>
-      </View>
+        trashType={info.type}
+        trashTypeName={info.name}
+        guideUrl={info.link?.url}
+        schedule={info.nextDate}
+      />
     );
   });
 
