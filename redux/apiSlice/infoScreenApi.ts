@@ -3,6 +3,7 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
+import { buildCommonHeader } from './buildCommonHeader';
 import { BASE_API_URL } from './constants';
 
 export const infoScreenApi = createApi({
@@ -16,7 +17,9 @@ export const infoScreenApi = createApi({
       query: (id) => ({
         url: `/screen/info/${id}`,
         method: 'GET',
-        headers: {},
+        headers: {
+          ...buildCommonHeader(),
+        },
       }),
     }),
   }),

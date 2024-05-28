@@ -3,6 +3,7 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
+import { buildCommonHeader } from './buildCommonHeader';
 import { BASE_API_URL } from './constants';
 
 export const areaApi = createApi({
@@ -16,7 +17,9 @@ export const areaApi = createApi({
       query: () => ({
         url: '/areas',
         method: 'GET',
-        headers: {},
+        headers: {
+          ...buildCommonHeader(),
+        },
       }),
     }),
   }),

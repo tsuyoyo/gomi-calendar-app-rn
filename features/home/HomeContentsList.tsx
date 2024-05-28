@@ -11,6 +11,7 @@ import { HomeWeeklyScheduleComponent } from './HomeWeeklyScheduleComponent';
 export type HomeContentsListProps = ViewProps & {
   response: HomeResponse;
   isLoading: boolean;
+  onRefresh: () => void;
 };
 
 const buildHomeComponent = (
@@ -51,6 +52,7 @@ const buildHomeComponent = (
 export const HomeContentsList: React.FC<HomeContentsListProps> = ({
   response,
   isLoading,
+  onRefresh,
   style,
 }) => {
   return (
@@ -62,6 +64,7 @@ export const HomeContentsList: React.FC<HomeContentsListProps> = ({
       renderItem={({ item }) =>
         buildHomeComponent(response, item.type, item.index)
       }
+      onRefresh={onRefresh}
       refreshing={isLoading}
       ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
       ListHeaderComponent={() => <View style={{ height: 12 }} />}

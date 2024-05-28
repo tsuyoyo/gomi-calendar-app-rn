@@ -14,3 +14,7 @@ $ license-checker --production  --json --out ./licenses.json
 ```
 $ eas build -p android --profile development
 ```
+
+### EAS tips
+
+- https://note.com/rect_angle/n/n87aba214fab4

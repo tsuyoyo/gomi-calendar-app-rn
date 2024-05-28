@@ -46,7 +46,6 @@ export const RootLayout: React.FC = () => {
         i18n.changeLanguage(langCode);
       }
     }
-    console.log(`i18n.language - ${locales[0].languageCode}`);
   }, [i18n, i18n.language, locales]);
 
   const [loaded] = useFonts({

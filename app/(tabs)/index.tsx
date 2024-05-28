@@ -2,6 +2,7 @@ import { HomeContentsList } from '@/features/home/HomeContentsList';
 import { useLazyGetHomeScreenQuery } from '@/redux/apiSlice/homeScreenApi';
 import { AppDispatch, RootState } from '@/redux/store';
 import { loadAreaConfig } from '@/redux/thunk/storage';
+import { useLocales } from 'expo-localization';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +24,7 @@ export default function HomeScreen() {
     dispatch(loadAreaConfig());
   }, [dispatch]);
 
-  useEffect(() => {
+  const fetchHomeData = useCallback(() => {
     if (areaConfig === undefined) {
       // Do nothing, because it's not been loaded the data from storage yet.
     } else if (areaConfig === null) {
@@ -32,7 +33,14 @@ export default function HomeScreen() {
       trigger(areaConfig);
       setIsDialogVisible(false);
     }
-  }, [areaConfig, t, trigger]);
+  }, [areaConfig, trigger]);
+
+  const locales = useLocales();
+  const locale = locales[0];
+
+  useEffect(() => {
+    fetchHomeData();
+  }, [areaConfig, locale, fetchHomeData]);
 
   const openAreaConfig = useCallback(() => {
     router.push('/area-selection-screen');
@@ -62,7 +70,13 @@ export default function HomeScreen() {
   }
   return (
     <>
-      <HomeContentsList response={data} isLoading={isFetching} />
+      <HomeContentsList
+        response={data}
+        isLoading={isFetching}
+        onRefresh={() => {
+          fetchHomeData();
+        }}
+      />
     </>
   );
 }
