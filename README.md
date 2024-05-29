@@ -18,3 +18,7 @@ $ eas build -p android --profile development
 ### EAS tips
 
 - https://note.com/rect_angle/n/n87aba214fab4
+
+### Guide to submit Android app
+
+- https://github.com/expo/fyi/blob/main/creating-google-service-account.md
