@@ -22,3 +22,5 @@ $ eas build -p android --profile development
 ### Guide to submit Android app
 
 - https://github.com/expo/fyi/blob/main/creating-google-service-account.md
+
+* Note: In the first time, we have to upload a binary to Google play console manually. [This](https://docs.expo.dev/submit/android/#manually-uploading-your-app-for-the-first-time) is the guide for it.

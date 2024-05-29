@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "tsuyoyo.gomiapp.narashino"
+      "package": "tsuyoyo.gomiapp.narashino",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
