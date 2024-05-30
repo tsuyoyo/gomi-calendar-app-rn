@@ -1,7 +1,5 @@
 {
   "expo": {
-    "name": "gomi-calendar-rn-app",
-    "slug": "narashino-city-trash-collection-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -17,12 +15,9 @@
       "bundleIdentifier": "tsuyoyo.gomiapp.narashino"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
+      "icon": "./assets/images/appIcon.png",
       "package": "tsuyoyo.gomiapp.narashino",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "bundler": "metro",
