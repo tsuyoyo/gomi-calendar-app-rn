@@ -1,7 +1,5 @@
-import { ListDivider } from '@/components/ListDivider';
+import { AppPressable } from '@/components/AppPressable';
 import { ThemedButton } from '@/components/ThemedButton';
-import { AppPressable } from '@/components/ThemedPressable';
-import { ThemedText } from '@/components/ThemedText';
 import { Area } from '@/data/Area';
 import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
 import { areaSlice } from '@/redux/slice/AreaSlice';
@@ -14,6 +12,7 @@ import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
+import { Divider, Text } from 'react-native-paper';
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -71,9 +70,9 @@ const AreaItem: React.FC<{
       onPress={onClicked}
     >
       <View style={styles.areaItem}>
-        <ThemedText style={styles.areaItemName}>
+        <Text variant="labelLarge" style={styles.areaItemName}>
           {area.name}
-        </ThemedText>
+        </Text>
         <CheckIcon isVisible={isSelected} />
       </View>
     </AppPressable>
@@ -120,7 +119,7 @@ export const AreaSelectionList: React.FC = () => {
         data={data?.areas ?? []}
         extraData={selectedArea}
         refreshing={isLoading}
-        ItemSeparatorComponent={() => <ListDivider />}
+        ItemSeparatorComponent={() => <Divider />}
       />
       <View style={styles.buttonContainer}>
         <ThemedButton

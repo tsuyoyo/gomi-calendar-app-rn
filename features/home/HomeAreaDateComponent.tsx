@@ -1,4 +1,4 @@
-import { AppPressable } from '@/components/ThemedPressable';
+import { AppPressable } from '@/components/AppPressable';
 import { HomeAreaDateComponent as HomeAreaDateData } from '@/data/screen/home/HomeAreaDateComponent';
 import { appColors } from '@/styles/appColors';
 import { router } from 'expo-router';

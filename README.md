@@ -18,6 +18,20 @@ $ eas build -p android --profile development
 ### EAS tips
 
 - https://note.com/rect_angle/n/n87aba214fab4
+- https://blog.daiki-portfolio.com/eas-build/#i-0
+
+## Note to submit Android app
+
+https://docs.expo.dev/submit/android/
+
+### Build a binary on EAS
+
+```
+$ eas build --profile production --platform android
+```
+
+- Then, a build process is triggered on the EAS.
+-
 
 ### Guide to submit Android app
 

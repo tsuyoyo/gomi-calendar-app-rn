@@ -17,9 +17,19 @@
       "ios": {
         "image": "latest"
       }
+    },
+    "emulator": {
+      "android": {
+        "buildType": "apk"
+      }
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./narashino-city-gomi-app-5ba425989c50.json",
+        "track": "internal"
+      }
+    }
   }
 }

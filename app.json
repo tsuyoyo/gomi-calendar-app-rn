@@ -10,19 +10,18 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "primaryColor": "#469c57",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "tsuyoyo.gomiapp.narashino"
     },
     "android": {
-      "icon": "./assets/images/appIcon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/gomi-app-icon.png",
+        "backgroundColor": "#469c57"
+      },
       "package": "tsuyoyo.gomiapp.narashino",
-      "versionCode": 3
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "versionCode": 4
     },
     "plugins": ["expo-router", "expo-localization"],
     "experiments": {
