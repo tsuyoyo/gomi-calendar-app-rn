@@ -1,13 +1,12 @@
+import { appColors } from '@/styles/appColors';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { TouchableOpacityProps } from 'react-native-gesture-handler';
 import { ThemedText } from './ThemedText';
-import { appColors } from '@/styles/appColors';
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 4,
     padding: 10,
     height: 48,
   },

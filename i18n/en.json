@@ -3,7 +3,8 @@
     "app-title": "Narashino city",
     "ok": "OK",
     "welcome": "Welcome",
-    "open-by-tap": "Tap here to open"
+    "open-by-tap": "Tap here to open",
+    "oss-license": "OSS license"
   },
   "translation": {
     "welcome": "Welcome to React and react-i18next"

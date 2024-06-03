@@ -105,7 +105,6 @@ export const RootLayout: React.FC = () => {
                 headerTitle: 'OSS License',
               }}
             />
-            <Stack.Screen name="+not-found" />
           </Stack>
         </PaperProvider>
       </Provider>

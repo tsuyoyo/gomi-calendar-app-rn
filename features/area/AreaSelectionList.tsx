@@ -1,4 +1,3 @@
-import { AppPressable } from '@/components/AppPressable';
 import { ThemedButton } from '@/components/ThemedButton';
 import { Area } from '@/data/Area';
 import { useGetAreasQuery } from '@/redux/apiSlice/areaApi';
@@ -12,7 +11,7 @@ import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
-import { Divider, Text } from 'react-native-paper';
+import { Divider, List, Text } from 'react-native-paper';
 import Toast from 'react-native-root-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
   areaItemContainer: {
     minHeight: 64,
     width: '100%',
-    paddingHorizontal: 16,
     paddingVertical: 8,
     justifyContent: 'center',
     verticalAlign: 'middle',
@@ -64,18 +62,19 @@ const AreaItem: React.FC<{
   onClicked: () => void;
 }> = ({ area, isSelected, onClicked }) => {
   return (
-    <AppPressable
+    <List.Item
       key={area.id}
+      title={() => (
+        <View style={styles.areaItem}>
+          <Text variant="titleMedium" style={styles.areaItemName}>
+            {area.name}
+          </Text>
+          <CheckIcon isVisible={isSelected} />
+        </View>
+      )}
       style={styles.areaItemContainer}
       onPress={onClicked}
-    >
-      <View style={styles.areaItem}>
-        <Text variant="labelLarge" style={styles.areaItemName}>
-          {area.name}
-        </Text>
-        <CheckIcon isVisible={isSelected} />
-      </View>
-    </AppPressable>
+    />
   );
 };
 

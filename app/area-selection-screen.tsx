@@ -1,5 +1,5 @@
 import { AreaSelectionList } from '@/features/area/AreaSelectionList';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 const AreaSelectionScreen: React.FC = () => {
   return (
@@ -10,6 +10,7 @@ const AreaSelectionScreen: React.FC = () => {
       }}
     >
       <AreaSelectionList />
+      <SafeAreaView />
     </View>
   );
 };
