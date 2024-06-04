@@ -21,7 +21,7 @@
         "backgroundColor": "#469c57"
       },
       "package": "tsuyoyo.gomiapp.narashino",
-      "versionCode": 4
+      "versionCode": 5
     },
     "plugins": ["expo-router", "expo-localization"],
     "experiments": {
