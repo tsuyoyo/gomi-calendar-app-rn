@@ -18,5 +18,9 @@
     "title": "Select area",
     "apply-selection": "Apply",
     "fetch-error": "Failed to fetch area data"
+  },
+  "reminder": {
+    "title": "Narashino city",
+    "message": "{{trash}} is collected today. Put them the place by the time when a truck comes."
   }
 }

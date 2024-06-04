@@ -1,4 +1,5 @@
 import { HomeContentsList } from '@/features/home/HomeContentsList';
+import { useRegisterReminders } from '@/features/reminder/registerReminders';
 import { useLazyGetHomeScreenQuery } from '@/redux/apiSlice/homeScreenApi';
 import { AppDispatch, RootState } from '@/redux/store';
 import { loadAreaConfig } from '@/redux/thunk/storage';
@@ -13,7 +14,7 @@ export default function HomeScreen() {
   const dispatch = useDispatch<AppDispatch>();
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
-  const { t } = useTranslation(['common', 'home']);
+  const { t } = useTranslation(['common', 'home', 'reminder']);
   const areaConfig = useSelector<
     RootState,
     string | undefined | null
@@ -48,6 +49,22 @@ export default function HomeScreen() {
   }, []);
 
   const { data, error, isError, isLoading, isFetching } = result;
+
+  const registerReminders = useRegisterReminders();
+
+  useEffect(() => {
+    const components = data?.weeklyScheduleComponents;
+    const weeklySchedule =
+      components !== undefined && components?.length > 0
+        ? components[0]
+        : null;
+
+    if (weeklySchedule !== null) {
+      weeklySchedule.schedules.forEach(async (s) => {
+        await registerReminders(s.calendar);
+      });
+    }
+  }, [data?.weeklyScheduleComponents, registerReminders]);
 
   if (isDialogVisible) {
     return (

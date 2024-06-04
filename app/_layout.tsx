@@ -1,6 +1,11 @@
 import { store } from '@/redux/store';
 import { useFonts } from 'expo-font';
 import { useLocales } from 'expo-localization';
+import {
+  getPermissionsAsync,
+  requestPermissionsAsync,
+  setNotificationHandler,
+} from 'expo-notifications';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
@@ -31,6 +36,15 @@ const theme = {
   },
 };
 
+// Configuration for a push notification.
+setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 export const RootLayout: React.FC = () => {
   if (__DEV__) {
     require('./ReactotronConfig');
@@ -38,6 +52,26 @@ export const RootLayout: React.FC = () => {
   const { t, i18n } = useTranslation(['common', 'area']);
 
   const locales = useLocales();
+
+  useEffect(() => {
+    const f = async (): Promise<void> => {
+      console.log('aaaaaa');
+      const { status: existingStatus } = await getPermissionsAsync();
+      let finalStatus = existingStatus;
+
+      console.log('existing status - ' + existingStatus);
+      // NOTE: もしgranted or unknownじゃなかったら、開いてもらう
+      if (existingStatus !== 'granted') {
+        const { status } = await requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        console.log('Permission was not granted');
+        return;
+      }
+    };
+    f();
+  }, []);
 
   useEffect(() => {
     if (locales.length > 0) {
