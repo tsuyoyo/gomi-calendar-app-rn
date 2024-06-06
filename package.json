@@ -6,6 +6,8 @@
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
+    "build:android:local": "eas build --profile production --platform android --local",
+    "build:android:local:dev": "eas build --profile emulator --platform android --local",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",

@@ -2,7 +2,10 @@ import { HomeContentsList } from '@/features/home/HomeContentsList';
 import { useRegisterReminders } from '@/features/reminder/registerReminders';
 import { useLazyGetHomeScreenQuery } from '@/redux/apiSlice/homeScreenApi';
 import { AppDispatch, RootState } from '@/redux/store';
-import { loadAreaConfig } from '@/redux/thunk/storage';
+import {
+  loadAreaConfig,
+  loadNotificationConfig,
+} from '@/redux/thunk/storage';
 import { useLocales } from 'expo-localization';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
@@ -23,6 +26,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     dispatch(loadAreaConfig());
+    dispatch(loadNotificationConfig());
   }, [dispatch]);
 
   const fetchHomeData = useCallback(() => {
