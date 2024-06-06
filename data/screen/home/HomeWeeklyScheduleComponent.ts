@@ -7,7 +7,6 @@ export type HomeWeeklyScheduleTrashTypeInfo = {
   name: string;
   schedule: string;
   guideUrl: string;
-  calendar: CalendarEntry;
 };
 
 export type HomeWeeklyScheduleComponent = {
@@ -15,4 +14,5 @@ export type HomeWeeklyScheduleComponent = {
   description: string;
   schedules: HomeWeeklyScheduleTrashTypeInfo[];
   calendarLink: LinkComponent;
+  calendar: CalendarEntry;
 };

@@ -1,7 +1,5 @@
-import { getDateInJst } from './getDateInJst';
-
 export const getWeekNumberThisMonth = () => {
-  const today = getDateInJst();
+  const today = new Date();
   const firstDayOfMonth = new Date(
     today.getFullYear(),
     today.getMonth(),

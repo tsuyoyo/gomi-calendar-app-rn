@@ -60,9 +60,11 @@ export default function HomeScreen() {
         : null;
 
     if (weeklySchedule !== null) {
-      weeklySchedule.schedules.forEach(async (s) => {
-        await registerReminders(s.calendar);
-      });
+      console.log(
+        'length of weeklySchedule - ' +
+          weeklySchedule.schedules.length,
+      );
+      registerReminders(weeklySchedule.calendar);
     }
   }, [data?.weeklyScheduleComponents, registerReminders]);
 

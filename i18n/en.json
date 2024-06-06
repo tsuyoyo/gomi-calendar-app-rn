@@ -20,7 +20,7 @@
     "fetch-error": "Failed to fetch area data"
   },
   "reminder": {
-    "title": "Narashino city",
-    "message": "{{trash}} is collected today. Put them the place by the time when a truck comes."
+    "title": "{{trash}} is collected today.",
+    "message": "Put them the place by the time when a truck comes."
   }
 }

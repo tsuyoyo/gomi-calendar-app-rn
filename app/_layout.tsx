@@ -56,12 +56,14 @@ export const RootLayout: React.FC = () => {
   useEffect(() => {
     const f = async (): Promise<void> => {
       console.log('aaaaaa');
-      const { status: existingStatus } = await getPermissionsAsync();
+      const { status: existingStatus, granted } =
+        await getPermissionsAsync();
       let finalStatus = existingStatus;
 
       console.log('existing status - ' + existingStatus);
       // NOTE: もしgranted or unknownじゃなかったら、開いてもらう
-      if (existingStatus !== 'granted') {
+      // if (existingStatus !== 'granted') {
+      if (!granted) {
         const { status } = await requestPermissionsAsync();
         finalStatus = status;
       }

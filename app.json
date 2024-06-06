@@ -21,9 +21,20 @@
         "backgroundColor": "#469c57"
       },
       "package": "tsuyoyo.gomiapp.narashino",
-      "versionCode": 5
+      "versionCode": 6
     },
-    "plugins": ["expo-router", "expo-localization"],
+
+    "plugins": [
+      "expo-router",
+      "expo-localization",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/android-notification-icon.png",
+          "color": "#FFFFFF"
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     },
