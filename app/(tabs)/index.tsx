@@ -1,12 +1,10 @@
 import { HomeContentsList } from '@/features/home/HomeContentsList';
-import { useRegisterReminders } from '@/features/reminder/registerReminders';
+import { useReminderBindings } from '@/features/reminder/useReminderBindings';
 import { useLazyGetHomeScreenQuery } from '@/redux/apiSlice/homeScreenApi';
 import { AppDispatch, RootState } from '@/redux/store';
 import {
-  ReminderConfig,
   loadAreaConfig,
   loadReminderConfig,
-  storeReminderConfig,
 } from '@/redux/thunk/storage';
 import { useLocales } from 'expo-localization';
 import { router } from 'expo-router';
@@ -31,16 +29,6 @@ export default function HomeScreen() {
     dispatch(loadAreaConfig());
     dispatch(loadReminderConfig());
   }, [dispatch]);
-
-  const reminderConfig = useSelector<RootState, ReminderConfig>(
-    (s) => s.reminder.config,
-  );
-  useEffect(() => {
-    dispatch(storeReminderConfig(reminderConfig));
-
-    // TODO: Update reminders
-    // (Cancel / re-fetch...etc)
-  }, [dispatch, reminderConfig]);
 
   const fetchHomeData = useCallback(() => {
     if (areaConfig === undefined) {
@@ -67,23 +55,7 @@ export default function HomeScreen() {
 
   const { data, error, isError, isLoading, isFetching } = result;
 
-  const registerReminders = useRegisterReminders();
-
-  useEffect(() => {
-    const components = data?.weeklyScheduleComponents;
-    const weeklySchedule =
-      components !== undefined && components?.length > 0
-        ? components[0]
-        : null;
-
-    if (weeklySchedule !== null) {
-      console.log(
-        'length of weeklySchedule - ' +
-          weeklySchedule.schedules.length,
-      );
-      registerReminders(weeklySchedule.calendar);
-    }
-  }, [data?.weeklyScheduleComponents, registerReminders]);
+  useReminderBindings(data);
 
   if (isDialogVisible) {
     return (

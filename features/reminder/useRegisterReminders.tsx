@@ -1,5 +1,7 @@
 import { CalendarEntry, TrashSchedule } from '@/data/CalendarEntry';
 import { TrashType } from '@/data/TrashType';
+import { RootState } from '@/redux/store';
+import { ReminderConfig } from '@/redux/thunk/storage';
 import {
   CalendarTriggerInputValue,
   DateTriggerInput,
@@ -7,54 +9,75 @@ import {
   cancelAllScheduledNotificationsAsync,
   scheduleNotificationAsync,
 } from 'expo-notifications';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+import { useSelector } from 'react-redux';
 import { getWeekNumberThisMonth } from './getWeekNumberThisMonth';
 
-const generateiOSTriggers = (schedule: TrashSchedule) => {
-  const triggerBase = {
-    hour: 7,
-    minute: 0,
-    //   seconds: 10,
-    timezone: 'JST',
-    repeats: true,
-    channelId: 'narashino-gomi-calendar',
-  };
-  const triggers = Array<CalendarTriggerInputValue>();
-
-  if (schedule.weeks === undefined || schedule.weeks.length === 0) {
-    schedule.days.forEach((d) => {
-      triggers.push({
-        ...triggerBase,
-        weekday: d,
-      });
-    });
-  } else {
-    schedule.weeks.forEach((w) => {
-      schedule.days.forEach((d) => {
-        triggers.push({
-          ...triggerBase,
-          weekOfMonth: w,
-          weekday: d,
-        });
-      });
-    });
-  }
-  return triggers;
+const DEFAULT_REMINDER_TIME = {
+  hour: 7,
+  minute: 0,
 };
+
+const CHANNEL_ID = 'narashino-gomi-calendar';
 
 // Memo: AndroidとiOSでreminderの設定方法が違うっぽい
 // https://docs.expo.dev/versions/latest/sdk/notifications/#weeklynotificationtrigger
 export const useRegisterReminders = () => {
   const { t } = useTranslation('reminder');
+  const reminderConfig = useSelector<RootState, ReminderConfig>(
+    (s) => s.reminder.config,
+  );
+  const reminderTime = useMemo(() => {
+    return {
+      hour: reminderConfig.time?.hour ?? DEFAULT_REMINDER_TIME.hour,
+      minute:
+        reminderConfig.time?.minute ?? DEFAULT_REMINDER_TIME.minute,
+    };
+  }, [reminderConfig.time?.hour, reminderConfig.time?.minute]);
+
+  const generateiOSTriggers = useCallback(
+    (schedule: TrashSchedule) => {
+      const triggerBase = {
+        ...reminderTime,
+        timezone: 'JST',
+        repeats: true,
+        channelId: CHANNEL_ID,
+      };
+      const triggers = Array<CalendarTriggerInputValue>();
+
+      if (
+        schedule.weeks === undefined ||
+        schedule.weeks.length === 0
+      ) {
+        schedule.days.forEach((d) => {
+          triggers.push({
+            ...triggerBase,
+            weekday: d,
+          });
+        });
+      } else {
+        schedule.weeks.forEach((w) => {
+          schedule.days.forEach((d) => {
+            triggers.push({
+              ...triggerBase,
+              weekOfMonth: w,
+              weekday: d,
+            });
+          });
+        });
+      }
+      return triggers;
+    },
+    [reminderTime],
+  );
 
   const generateAndroidTriggers = useCallback(
     (schedule: TrashSchedule) => {
       const triggerBase = {
-        channelId: 'narashino-gomi-calendar',
-        hour: 7,
-        minute: 0,
+        channelId: CHANNEL_ID,
+        ...reminderTime,
       };
       const triggers = Array<WeeklyTriggerInput | DateTriggerInput>();
 
@@ -76,7 +99,7 @@ export const useRegisterReminders = () => {
         const now = new Date();
         now.setSeconds(now.getSeconds() + 3);
         triggers.push({
-          channelId: 'narashino-gomi-calendar',
+          channelId: CHANNEL_ID,
           date: now,
         });
       } else {
@@ -85,8 +108,8 @@ export const useRegisterReminders = () => {
             const today = new Date();
             const thisWeekInMonth = getWeekNumberThisMonth();
             const reminderDate = new Date();
-            reminderDate.setHours(7);
-            reminderDate.setMinutes(0);
+            reminderDate.setHours(reminderTime.hour);
+            reminderDate.setMinutes(reminderTime.minute);
 
             if (today.getDay() < d && thisWeekInMonth === w) {
               console.log('Android trigger - 1');
@@ -110,7 +133,7 @@ export const useRegisterReminders = () => {
             } else if (
               today.getDay() === d &&
               thisWeekInMonth === w &&
-              today.getHours() === 6 // TODO: modify it to the configured time
+              today.getHours() === reminderTime.hour
             ) {
               console.log('Android trigger - 3');
               // When today is the collection day,
@@ -132,7 +155,7 @@ export const useRegisterReminders = () => {
       }
       return triggers;
     },
-    [],
+    [reminderTime],
   );
 
   const registerNotification = useCallback(
@@ -163,7 +186,7 @@ export const useRegisterReminders = () => {
         });
       }
     },
-    [generateAndroidTriggers, t],
+    [generateAndroidTriggers, generateiOSTriggers, t],
   );
 
   return useCallback(
