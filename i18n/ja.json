@@ -22,5 +22,11 @@
   "reminder": {
     "title": "今日は{{trash}}の収集日です。",
     "message": "地域で決められた時間までに出しましょう。"
+  },
+  "reminder-config": {
+    "title": "リマインダー設定",
+    "enabled-title": "リマインダーを有効にする",
+    "time-title": "通知する時間",
+    "time": "{{hour}}:{{minute}}"
   }
 }

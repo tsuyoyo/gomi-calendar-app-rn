@@ -5,7 +5,6 @@ import {
   DateTriggerInput,
   WeeklyTriggerInput,
   cancelAllScheduledNotificationsAsync,
-  getAllScheduledNotificationsAsync,
   scheduleNotificationAsync,
 } from 'expo-notifications';
 import { useCallback } from 'react';
@@ -169,11 +168,11 @@ export const useRegisterReminders = () => {
 
   return useCallback(
     async (calendar: CalendarEntry) => {
-      const ids = await getAllScheduledNotificationsAsync();
-      console.log(`# of notifications - ${ids.length}`);
       await cancelAllScheduledNotificationsAsync();
+
       const { burnable, incombustible, recyclable, harmful } =
         calendar;
+
       if (burnable.days.length > 0) {
         registerNotification(TrashType.BURNABLE, burnable);
       }

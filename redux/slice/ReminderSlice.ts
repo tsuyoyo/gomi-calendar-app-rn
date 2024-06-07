@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { NotificationConfig } from '../thunk/storage';
+import { ReminderConfig } from '../thunk/storage';
 
-export type NotificationState = {
-  config: NotificationConfig;
+export type ReminderState = {
+  config: ReminderConfig;
 };
 
-const initialState: NotificationState = {
-  config: { isEnabled: false },
+const initialState: ReminderState = {
+  config: { isEnabled: true, time: { hour: 6, minute: 45 } },
 };
 
-export const notificationSlice = createSlice({
-  name: 'notification',
+export const reminderSlice = createSlice({
+  name: 'reminder',
   initialState,
   reducers: {
     setIsEnabled: (state, action: PayloadAction<boolean>) => {
@@ -32,3 +32,5 @@ export const notificationSlice = createSlice({
     },
   },
 });
+
+export default reminderSlice.reducer;

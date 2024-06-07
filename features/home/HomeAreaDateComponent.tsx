@@ -1,9 +1,8 @@
-import { AppPressable } from '@/components/AppPressable';
 import { HomeAreaDateComponent as HomeAreaDateData } from '@/data/screen/home/HomeAreaDateComponent';
 import { appColors } from '@/styles/appColors';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { Icon, Text, TouchableRipple } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   surface: {
@@ -31,7 +30,7 @@ export const HomeAreaDateComponent: React.FC<{
   data: HomeAreaDateData;
 }> = ({ data }) => {
   return (
-    <AppPressable
+    <TouchableRipple
       style={styles.surface}
       onPress={() => {
         router.push('/area-selection-screen');
@@ -52,6 +51,6 @@ export const HomeAreaDateComponent: React.FC<{
           </Text>
         </View>
       </>
-    </AppPressable>
+    </TouchableRipple>
   );
 };

@@ -3,8 +3,10 @@ import { useRegisterReminders } from '@/features/reminder/registerReminders';
 import { useLazyGetHomeScreenQuery } from '@/redux/apiSlice/homeScreenApi';
 import { AppDispatch, RootState } from '@/redux/store';
 import {
+  ReminderConfig,
   loadAreaConfig,
-  loadNotificationConfig,
+  loadReminderConfig,
+  storeReminderConfig,
 } from '@/redux/thunk/storage';
 import { useLocales } from 'expo-localization';
 import { router } from 'expo-router';
@@ -18,6 +20,7 @@ export default function HomeScreen() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   const { t } = useTranslation(['common', 'home', 'reminder']);
+
   const areaConfig = useSelector<
     RootState,
     string | undefined | null
@@ -26,8 +29,18 @@ export default function HomeScreen() {
 
   useEffect(() => {
     dispatch(loadAreaConfig());
-    dispatch(loadNotificationConfig());
+    dispatch(loadReminderConfig());
   }, [dispatch]);
+
+  const reminderConfig = useSelector<RootState, ReminderConfig>(
+    (s) => s.reminder.config,
+  );
+  useEffect(() => {
+    dispatch(storeReminderConfig(reminderConfig));
+
+    // TODO: Update reminders
+    // (Cancel / re-fetch...etc)
+  }, [dispatch, reminderConfig]);
 
   const fetchHomeData = useCallback(() => {
     if (areaConfig === undefined) {

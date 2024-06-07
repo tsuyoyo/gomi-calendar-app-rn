@@ -6,6 +6,7 @@ import { Divider } from 'react-native-paper';
 import { InfoAreaConfigComponent } from './InfoAreaConfigComponent';
 import { InfoLinkComponent } from './InfoLinkComponent';
 import { InfoOssListItemComponent } from './InfoOssListItemComponent';
+import { InfoReminderConfigComponent } from './InfoReminderConfigComponent';
 
 export type InfoContentsListProps = ViewProps & {
   response: InfoResponse;
@@ -18,6 +19,8 @@ const buildInfoComponent = (
   index: number,
 ) => {
   switch (type) {
+    case InfoComponentType.REMINDER_CONFIG:
+      return <InfoReminderConfigComponent />;
     case InfoComponentType.LINK:
       return <InfoLinkComponent data={response.links[index]} />;
     case InfoComponentType.AREA_CONFIG:

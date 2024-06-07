@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { areaSlice } from '../slice/AreaSlice';
-import { notificationSlice } from '../slice/NotificationSlice';
+import { reminderSlice } from '../slice/ReminderSlice';
 
 const KEY_AREA_ID = 'key-area-id';
-const KEY_NOTIFICATION_CONFIG = 'key-notification-config';
+const KEY_REMINDER_CONFIG = 'key-reminder-config';
 
 export const loadAreaConfig = createAsyncThunk(
   'storage/loadAreaConfig',
@@ -23,38 +23,36 @@ export const storeAreaConfig = createAsyncThunk(
   },
 );
 
-export type NotificationConfig = {
+export type ReminderConfig = {
   isEnabled: boolean;
   time?: { hour: number; minute: number };
 };
 
-export const storeNotificationConfig = createAsyncThunk(
-  'storage/storeNotificationConfig',
-  async (args: NotificationConfig, _thunkAPI) => {
+export const storeReminderConfig = createAsyncThunk(
+  'storage/storeReminderConfig',
+  async (args: ReminderConfig, _thunkAPI) => {
     await AsyncStorage.setItem(
-      KEY_NOTIFICATION_CONFIG,
+      KEY_REMINDER_CONFIG,
       JSON.stringify(args),
     );
   },
 );
 
-export const loadNotificationConfig = createAsyncThunk(
-  'storage/loadNotificationConfig',
+export const loadReminderConfig = createAsyncThunk(
+  'storage/loadReminderConfig',
   async (_, thunkAPI) => {
-    const config = await AsyncStorage.getItem(
-      KEY_NOTIFICATION_CONFIG,
-    );
+    const config = await AsyncStorage.getItem(KEY_REMINDER_CONFIG);
     if (config === null) {
       return null;
     }
-    const configObj = JSON.parse(config) as NotificationConfig;
-    console.log(`notificationConfig: ${JSON.stringify(configObj)}`);
+    const configObj = JSON.parse(config) as ReminderConfig;
+    console.log(`reminderConfig: ${JSON.stringify(configObj)}`);
     thunkAPI.dispatch(
-      notificationSlice.actions.setIsEnabled(configObj.isEnabled),
+      reminderSlice.actions.setIsEnabled(configObj.isEnabled),
     );
     if (configObj.time !== undefined) {
       thunkAPI.dispatch(
-        notificationSlice.actions.setTime(configObj.time),
+        reminderSlice.actions.setTime(configObj.time),
       );
     }
     return configObj;

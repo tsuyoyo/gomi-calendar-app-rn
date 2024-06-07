@@ -22,5 +22,11 @@
   "reminder": {
     "title": "{{trash}} is collected today.",
     "message": "Put them the place by the time when a truck comes."
+  },
+  "reminder-config": {
+    "title": "Reminder configurations",
+    "enabled-title": "Enable reminder",
+    "time-title": "Time for reminder",
+    "time": "{{hour}}:{{minute}}"
   }
 }

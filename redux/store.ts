@@ -5,14 +5,16 @@ import { areaApi } from './apiSlice/areaApi';
 import { homeScreenApi } from './apiSlice/homeScreenApi';
 import { infoScreenApi } from './apiSlice/infoScreenApi';
 import areaReducer from './slice/AreaSlice';
+import reminderReducer from './slice/ReminderSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     area: areaReducer,
+    reminder: reminderReducer,
     [areaApi.reducerPath]: areaApi.reducer,
     [homeScreenApi.reducerPath]: homeScreenApi.reducer,
-    [infoScreenApi.reducerPath]: infoScreenApi.reducer,    
+    [infoScreenApi.reducerPath]: infoScreenApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

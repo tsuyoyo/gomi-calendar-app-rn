@@ -49,7 +49,11 @@ export const RootLayout: React.FC = () => {
   if (__DEV__) {
     require('./ReactotronConfig');
   }
-  const { t, i18n } = useTranslation(['common', 'area']);
+  const { t, i18n } = useTranslation([
+    'common',
+    'area',
+    'reminder-config',
+  ]);
 
   const locales = useLocales();
 
@@ -127,6 +131,13 @@ export const RootLayout: React.FC = () => {
               options={{
                 headerShown: true,
                 headerTitle: t('area:title'),
+              }}
+            />
+            <Stack.Screen
+              name="reminder-config-screen"
+              options={{
+                headerShown: true,
+                headerTitle: t('reminder-config:title'),
               }}
             />
             <Stack.Screen
