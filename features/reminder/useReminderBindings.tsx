@@ -46,20 +46,4 @@ export const useReminderBindings = (data?: HomeResponse) => {
     registerReminders,
     reminderConfig,
   ]);
-
-  //   useEffect(() => {
-  //     const components = data?.weeklyScheduleComponents;
-  //     const weeklySchedule =
-  //       components !== undefined && components?.length > 0
-  //         ? components[0]
-  //         : null;
-
-  //     if (weeklySchedule !== null) {
-  //       console.log(
-  //         'length of weeklySchedule - ' +
-  //           weeklySchedule.schedules.length,
-  //       );
-  //       registerReminders(weeklySchedule.calendar);
-  //     }
-  //   }, [data?.weeklyScheduleComponents, registerReminders]);
 };

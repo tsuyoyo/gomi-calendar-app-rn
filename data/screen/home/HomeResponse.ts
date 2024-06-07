@@ -1,3 +1,4 @@
+import { Reminder } from '../../Reminder';
 import { LinkComponent } from '../common/LinkComponent';
 import { HomeAreaDateComponent } from './HomeAreaDateComponent';
 import { HomeComponentType } from './HomeComponentType';
@@ -13,4 +14,6 @@ export type HomeResponse = {
   nextComponents: HomeNextComponent[];
   weeklyScheduleComponents: HomeWeeklyScheduleComponent[];
   links: LinkComponent[];
+
+  reminders: Reminder[];
 };
