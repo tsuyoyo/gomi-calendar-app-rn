@@ -15,12 +15,12 @@ import { Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getWeekNumberThisMonth } from './getWeekNumberThisMonth';
 
-const DEFAULT_REMINDER_TIME = {
+export const DEFAULT_REMINDER_TIME = {
   hour: 7,
   minute: 0,
 };
 
-const CHANNEL_ID = 'narashino-gomi-calendar';
+export const CHANNEL_ID = 'narashino-gomi-calendar';
 
 // Memo: AndroidとiOSでreminderの設定方法が違うっぽい
 // https://docs.expo.dev/versions/latest/sdk/notifications/#weeklynotificationtrigger
@@ -73,6 +73,7 @@ export const useRegisterReminders = () => {
     [reminderTime],
   );
 
+  // Deprecated.
   const generateAndroidTriggers = useCallback(
     (schedule: TrashSchedule) => {
       const triggerBase = {

@@ -7,6 +7,8 @@ export const buildCommonHeader = () => {
       locale: languageCode,
     };
   } else {
-    return {};
+    return {
+      locale: 'ja',
+    };
   }
 };

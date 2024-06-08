@@ -1,3 +1,4 @@
+import { registerBackgroundFetchAsync } from '@/features/reminder/backgroundUpdateReminders';
 import { store } from '@/redux/store';
 import { useFonts } from 'expo-font';
 import { useLocales } from 'expo-localization';
@@ -92,6 +93,11 @@ export const RootLayout: React.FC = () => {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  useEffect(() => {
+    // unregisterBackgroundFetchAsync();
+    registerBackgroundFetchAsync();
+  }, []);
 
   if (!loaded) {
     return null;
