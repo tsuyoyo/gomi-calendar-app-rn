@@ -1,6 +1,7 @@
 import { reminderSlice } from '@/redux/slice/ReminderSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { useCallback, useMemo, useState } from 'react';
+import { getLastReminderUpdated } from '@/storage/lastReminderUpdate';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
@@ -123,12 +124,53 @@ const TimeConfig: React.FC = () => {
 };
 
 export const ReminderConfigComponent: React.FC = () => {
+  const { t } = useTranslation('reminder-config');
+
+  const [lastConfigUpdated, setLastConfigUpdated] = useState<{
+    year: number;
+    month: number;
+    date: number;
+    hour: number;
+    minute: number;
+  } | null>(null);
+
+  useEffect(() => {
+    getLastReminderUpdated().then(setLastConfigUpdated);
+  }, []);
+
+  const lastUpdated = useMemo(() => {
+    if (lastConfigUpdated === null) {
+      return '--:--';
+    }
+    const { year, month, date } = lastConfigUpdated;
+    const hour = lastConfigUpdated.hour.toString().padStart(2, '0');
+    const minute = lastConfigUpdated.minute
+      .toString()
+      .padStart(2, '0');
+    return `${year}/${month}/${date} ${hour}:${minute}`;
+  }, [lastConfigUpdated]);
+
   return (
-    <>
-      <IsEnabledConfig />
-      <Divider />
-      <TimeConfig />
-      <Divider />
-    </>
+    <View style={{ flexDirection: 'column', height: '100%' }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+        }}
+      >
+        <IsEnabledConfig />
+        <Divider />
+        <TimeConfig />
+        <Divider />
+      </View>
+      <Text
+        variant="labelSmall"
+        style={{
+          marginVertical: 8,
+          marginHorizontal: 8,
+          textAlign: 'right',
+        }}
+      >{`${t('home-component-last-updated')} (${lastUpdated})`}</Text>
+    </View>
   );
 };

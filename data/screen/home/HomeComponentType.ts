@@ -4,4 +4,5 @@ export enum HomeComponentType {
   SCHEDULE_NEXT = 3,
   WEEKLY_SCHEDULE = 4,
   LINK = 5,
+  REMINDER_CONFIG = 6,
 }

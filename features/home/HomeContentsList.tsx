@@ -5,6 +5,7 @@ import { View, ViewProps } from 'react-native';
 import { HomeAreaDateComponent } from './HomeAreaDateComponent';
 import { HomeLinkComponent } from './HomeLinkComponent';
 import { HomeNextScheduleComponent } from './HomeNextScheduleComponent';
+import { HomeReminderConfigComponent } from './HomeReminderConfigComponent';
 import { HomeTodayScheduleComponent } from './HomeTodayScheduleComponent';
 import { HomeWeeklyScheduleComponent } from './HomeWeeklyScheduleComponent';
 
@@ -46,6 +47,8 @@ const buildHomeComponent = (
       );
     case HomeComponentType.LINK:
       return <HomeLinkComponent link={response.links[index]} />;
+    case HomeComponentType.REMINDER_CONFIG:
+      return <HomeReminderConfigComponent />;
   }
 };
 

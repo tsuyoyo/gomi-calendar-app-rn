@@ -2,6 +2,7 @@ import { HomeResponse } from '@/data/screen/home/HomeResponse';
 import { buildCommonHeader } from '@/redux/apiSlice/buildCommonHeader';
 import { BASE_API_URL } from '@/redux/apiSlice/constants';
 import { getAreaConfig } from '@/storage/areaConfig';
+import { setLastReminderUpdated } from '@/storage/lastReminderUpdate';
 import { getReminderConfig } from '@/storage/reminderConfig';
 import axios from 'axios';
 import * as BackgroundFetch from 'expo-background-fetch';
@@ -34,20 +35,23 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
       const response = await api.get(`screen/home/${areaConfig}`);
       const homeResponse = response.data as HomeResponse;
 
+      await setLastReminderUpdated(new Date());
+
       registerRemindersByReminders(homeResponse.reminders);
     }
   }
   return BackgroundFetch.BackgroundFetchResult.NewData;
 });
 
-export async function registerBackgroundFetchAsync() {
+export const registerBackgroundFetchAsync = async () => {
   return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: 1000 * 60 * 24, // Update notification config once in a day
+    // Update notification config once in a day
+    minimumInterval: 60 * 60, // * 24, // MEMO: Until it gets stable, update in every hour
     stopOnTerminate: false, // android only,
     startOnBoot: true, // android only
   });
-}
+};
 
-export async function unregisterBackgroundFetchAsync() {
+export const unregisterBackgroundFetchAsync = async () => {
   return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-}
+};

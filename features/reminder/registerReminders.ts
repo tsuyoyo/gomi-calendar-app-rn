@@ -42,17 +42,4 @@ export const registerRemindersByReminders = async (
       },
     });
   });
-  // TODO: Remove below once test is done.
-  const now = new Date();
-  now.setSeconds(now.getSeconds() + 3);
-  await scheduleNotificationAsync({
-    content: {
-      title: 'For test',
-      body: `${reminders.length} reminders were registered`,
-    },
-    trigger: {
-      date: now,
-      channelId: CHANNEL_ID,
-    },
-  });
 };
