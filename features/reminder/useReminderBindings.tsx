@@ -42,7 +42,7 @@ export const useReminderBindings = (data?: HomeResponse) => {
       } else {
         const reminders = data?.reminders;
         if (reminders !== undefined && reminders.length > 0) {
-          registerRemindersByReminders(reminders);
+          registerRemindersByReminders(reminderConfig.day, reminders);
         } else {
           console.log(
             'No reminder is found at setting reminders (useReminderBindings)',

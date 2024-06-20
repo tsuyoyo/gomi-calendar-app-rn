@@ -26,6 +26,7 @@ export const storeAreaConfig = createAsyncThunk(
 export type ReminderConfig = {
   isEnabled: boolean;
   time?: { hour: number; minute: number };
+  day?: 'on-the-day' | 'day-before';
 };
 
 export const storeReminderConfig = createAsyncThunk(

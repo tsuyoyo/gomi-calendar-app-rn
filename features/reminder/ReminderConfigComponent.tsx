@@ -8,6 +8,7 @@ import DatePicker from 'react-native-date-picker';
 import {
   Checkbox,
   Divider,
+  RadioButton,
   Text,
   TouchableRipple,
 } from 'react-native-paper';
@@ -23,13 +24,32 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlignVertical: 'center',
   },
+  timeContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  timeConfigContainer: {
+    flexDirection: 'row',
+    verticalAlign: 'middle',
+    alignItems: 'center',
+  },
+  timeText: {
+    paddingVertical: 12,
+  },
   timeTitle: {
+    marginBottom: 12,
+  },
+  dayRadioButtonGroupContainer: {
+    flexDirection: 'column',
     flex: 1,
+    marginStart: 4,
+  },
+  dayRadioButtonText: {
     textAlignVertical: 'center',
   },
-  time: {
-    textAlignVertical: 'center',
-    fontWeight: 'bold',
+  dayRadioButtonContainer: {
+    alignContent: 'flex-end',
+    flexDirection: 'row',
   },
 });
 
@@ -82,16 +102,17 @@ const TimeConfig: React.FC = () => {
     useState(false);
 
   return (
-    <>
-      <TouchableRipple
-        onPress={() => setIsTimePickerVisible(true)}
-        disabled={!isEnabled}
-      >
-        <View style={styles.container}>
-          <Text variant="bodyLarge" style={styles.timeTitle}>
-            {t('time-title')}
-          </Text>
-          <Text variant="bodyLarge" style={styles.time}>
+    <View style={styles.timeContainer}>
+      <Text variant="bodyLarge" style={styles.timeTitle}>
+        {t('time-title')}
+      </Text>
+      <View style={styles.timeConfigContainer}>
+        <RemindDayConfig />
+        <TouchableRipple
+          onPress={() => setIsTimePickerVisible(true)}
+          disabled={!isEnabled}
+        >
+          <Text variant="headlineMedium" style={styles.timeText}>
             {time === undefined || !isEnabled
               ? '--:--'
               : t('time', {
@@ -99,8 +120,9 @@ const TimeConfig: React.FC = () => {
                   minute: time.minute.toString().padStart(2, '0'),
                 })}
           </Text>
-        </View>
-      </TouchableRipple>
+        </TouchableRipple>
+      </View>
+
       <DatePicker
         modal
         mode="time"
@@ -119,6 +141,69 @@ const TimeConfig: React.FC = () => {
           setIsTimePickerVisible(false);
         }}
       />
+    </View>
+  );
+};
+
+const RemindDayConfig: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation('reminder-config');
+
+  const isEnabled = useSelector<RootState, boolean>(
+    (s) => s.reminder.config.isEnabled,
+  );
+  const dayConfig = useSelector<RootState, string | undefined>(
+    (s) => s.reminder.config.day,
+  );
+
+  return (
+    <>
+      <View style={styles.dayRadioButtonGroupContainer}>
+        <TouchableRipple
+          onPress={() =>
+            dispatch(reminderSlice.actions.setDay('on-the-day'))
+          }
+          disabled={!isEnabled}
+        >
+          <View style={styles.dayRadioButtonContainer}>
+            <RadioButton
+              value="on-the-day"
+              disabled={!isEnabled}
+              status={
+                dayConfig === 'on-the-day' ? 'checked' : 'unchecked'
+              }
+            />
+            <Text
+              variant="bodyLarge"
+              style={styles.dayRadioButtonText}
+            >
+              {t('day-on-the-day')}
+            </Text>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple
+          onPress={() =>
+            dispatch(reminderSlice.actions.setDay('day-before'))
+          }
+          disabled={!isEnabled}
+        >
+          <View style={styles.dayRadioButtonContainer}>
+            <RadioButton
+              value="day-before"
+              disabled={!isEnabled}
+              status={
+                dayConfig === 'day-before' ? 'checked' : 'unchecked'
+              }
+            />
+            <Text
+              variant="bodyLarge"
+              style={styles.dayRadioButtonText}
+            >
+              {t('day-before')}
+            </Text>
+          </View>
+        </TouchableRipple>
+      </View>
     </>
   );
 };

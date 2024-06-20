@@ -46,7 +46,13 @@ export const useRegisterReminders = () => {
         channelId: CHANNEL_ID,
       };
       const triggers = Array<CalendarTriggerInputValue>();
-
+      const calculateRemindDay = (day: number) => {
+        if (reminderConfig.day === 'day-before') {
+          return day === 1 ? 7 : day - 1;
+        } else {
+          return day;
+        }
+      };
       if (
         schedule.weeks === undefined ||
         schedule.weeks.length === 0
@@ -54,7 +60,7 @@ export const useRegisterReminders = () => {
         schedule.days.forEach((d) => {
           triggers.push({
             ...triggerBase,
-            weekday: d,
+            weekday: calculateRemindDay(d),
           });
         });
       } else {
@@ -63,7 +69,7 @@ export const useRegisterReminders = () => {
             triggers.push({
               ...triggerBase,
               weekOfMonth: w,
-              weekday: d,
+              weekday: calculateRemindDay(d),
             });
           });
         });

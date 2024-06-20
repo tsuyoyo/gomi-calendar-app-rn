@@ -6,7 +6,11 @@ export type ReminderState = {
 };
 
 const initialState: ReminderState = {
-  config: { isEnabled: true, time: { hour: 6, minute: 45 } },
+  config: {
+    isEnabled: true,
+    time: { hour: 6, minute: 45 },
+    day: 'on-the-day',
+  },
 };
 
 export const reminderSlice = createSlice({
@@ -28,6 +32,16 @@ export const reminderSlice = createSlice({
       state.config = {
         ...currentConfig,
         time: action.payload,
+      };
+    },
+    setDay: (
+      state,
+      action: PayloadAction<'on-the-day' | 'day-before'>,
+    ) => {
+      const currentConfig = state.config;
+      state.config = {
+        ...currentConfig,
+        day: action.payload,
       };
     },
   },

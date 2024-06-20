@@ -47,14 +47,24 @@ export const HomeReminderConfigComponent: React.FC = () => {
 
   const configText = useMemo(() => {
     const time = reminderConfig?.time;
+    const when =
+      reminderConfig?.day === 'day-before'
+        ? t('day-before')
+        : t('day-on-the-day');
 
     return reminderConfig?.isEnabled && time !== undefined
-      ? t('time', {
+      ? t('home-component-time', {
+          when,
           hour: time.hour.toString().padStart(2, '0'),
           minute: time.minute.toString().padStart(2, '0'),
         })
       : t('home-component-disabled');
-  }, [reminderConfig?.isEnabled, reminderConfig?.time, t]);
+  }, [
+    reminderConfig?.day,
+    reminderConfig?.isEnabled,
+    reminderConfig?.time,
+    t,
+  ]);
 
   return (
     <TouchableRipple

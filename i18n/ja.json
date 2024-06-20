@@ -29,7 +29,11 @@
     "time-title": "通知する時間",
     "time": "{{hour}}:{{minute}}",
     "home-component-title": "リマインダの設定",
+    "home-component-time": "{{when}} {{hour}}:{{minute}}",
     "home-component-disabled": "無効になっています",
-    "home-component-last-updated": "リマインダ最終自動更新"
+    "home-component-last-updated": "リマインダ最終自動更新",
+    "day": "通知するタイミング",
+    "day-on-the-day": "当日",
+    "day-before": "前日"
   }
 }

@@ -29,7 +29,10 @@
     "time-title": "Time for reminder",
     "time": "{{hour}}:{{minute}}",
     "home-component-title": "Time for reminder",
+    "home-component-time": "{{when}} at {{hour}}:{{minute}}",
     "home-component-disabled": "Disabled",
-    "home-component-last-updated": "Last auto-updated"
+    "home-component-last-updated": "Last auto-updated",
+    "day-on-the-day": "On the day",
+    "day-before": "The day before"
   }
 }
