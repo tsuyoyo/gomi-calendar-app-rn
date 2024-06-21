@@ -1,3 +1,4 @@
+import { RemindDay } from '@/data/Reminder';
 import { getAreaConfig, setAreaConfig } from '@/storage/areaConfig';
 import {
   getReminderConfig,
@@ -26,7 +27,7 @@ export const storeAreaConfig = createAsyncThunk(
 export type ReminderConfig = {
   isEnabled: boolean;
   time?: { hour: number; minute: number };
-  day?: 'on-the-day' | 'day-before';
+  day?: RemindDay;
 };
 
 export const storeReminderConfig = createAsyncThunk(

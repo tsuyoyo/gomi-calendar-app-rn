@@ -55,7 +55,7 @@ export default function HomeScreen() {
 
   const { data, error, isError, isLoading, isFetching } = result;
 
-  useReminderBindings(data);
+  useReminderBindings(areaConfig ?? '', data);
 
   if (isDialogVisible) {
     return (

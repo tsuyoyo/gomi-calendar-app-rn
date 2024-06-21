@@ -1,3 +1,4 @@
+import { RemindDay } from '@/data/Reminder';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ReminderConfig } from '../thunk/storage';
 
@@ -9,7 +10,7 @@ const initialState: ReminderState = {
   config: {
     isEnabled: true,
     time: { hour: 6, minute: 45 },
-    day: 'on-the-day',
+    day: 'day-on-the-day',
   },
 };
 
@@ -34,10 +35,7 @@ export const reminderSlice = createSlice({
         time: action.payload,
       };
     },
-    setDay: (
-      state,
-      action: PayloadAction<'on-the-day' | 'day-before'>,
-    ) => {
+    setDay: (state, action: PayloadAction<RemindDay>) => {
       const currentConfig = state.config;
       state.config = {
         ...currentConfig,

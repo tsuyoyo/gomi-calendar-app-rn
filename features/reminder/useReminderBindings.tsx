@@ -1,4 +1,5 @@
 import { HomeResponse } from '@/data/screen/home/HomeResponse';
+import { useLazyGetScheduleRemindersQuery } from '@/redux/apiSlice/reminderApi';
 import { AppDispatch, RootState } from '@/redux/store';
 import {
   ReminderConfig,
@@ -11,21 +12,27 @@ import { registerRemindersByReminders } from './registerReminders';
 import { useCancelReminders } from './useCancelReminders';
 import { useRegisterReminders } from './useRegisterReminders';
 
-export const useReminderBindings = (data?: HomeResponse) => {
+export const useReminderBindings = (
+  id: string,
+  homeResponse?: HomeResponse,
+) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const registerReminders = useRegisterReminders();
+
   const cancelReminders = useCancelReminders();
 
   const reminderConfig = useSelector<RootState, ReminderConfig>(
     (s) => s.reminder.config,
   );
 
+  const [trigger] = useLazyGetScheduleRemindersQuery();
+
   useEffect(() => {
     dispatch(storeReminderConfig(reminderConfig));
 
     if (reminderConfig.isEnabled) {
-      const components = data?.weeklyScheduleComponents;
+      const components = homeResponse?.weeklyScheduleComponents;
       const weeklySchedule =
         components !== undefined && components?.length > 0
           ? components[0]
@@ -40,24 +47,31 @@ export const useReminderBindings = (data?: HomeResponse) => {
           registerReminders(weeklySchedule.calendar);
         }
       } else {
-        const reminders = data?.reminders;
-        if (reminders !== undefined && reminders.length > 0) {
-          registerRemindersByReminders(reminderConfig.day, reminders);
-        } else {
-          console.log(
-            'No reminder is found at setting reminders (useReminderBindings)',
-          );
-        }
+        trigger({
+          id,
+          day: reminderConfig.day ?? 'day-on-the-day',
+        }).then((response) => {
+          const reminders = response.data?.reminders;
+          if (reminders !== undefined && reminders.length > 0) {
+            registerRemindersByReminders(reminders);
+          } else {
+            console.log(
+              'No reminder is found at setting reminders (useReminderBindings)',
+            );
+          }
+        });
       }
     } else {
       cancelReminders();
     }
   }, [
     cancelReminders,
-    data?.reminders,
-    data?.weeklyScheduleComponents,
+    homeResponse?.reminders,
+    homeResponse?.weeklyScheduleComponents,
     dispatch,
     registerReminders,
     reminderConfig,
+    trigger,
+    id,
   ]);
 };

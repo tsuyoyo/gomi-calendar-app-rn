@@ -8,3 +8,5 @@ export type Reminder = {
   month: number;
   date: number;
 };
+
+export type RemindDay = 'day-before' | 'day-on-the-day';

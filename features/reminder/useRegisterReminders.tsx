@@ -76,7 +76,7 @@ export const useRegisterReminders = () => {
       }
       return triggers;
     },
-    [reminderTime],
+    [reminderConfig.day, reminderTime],
   );
 
   // Deprecated.

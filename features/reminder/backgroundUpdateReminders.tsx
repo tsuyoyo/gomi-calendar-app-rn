@@ -1,4 +1,4 @@
-import { HomeResponse } from '@/data/screen/home/HomeResponse';
+import { GetScheduleReminderResponse } from '@/data/GetScheduleReminderResponse';
 import { buildCommonHeader } from '@/redux/apiSlice/buildCommonHeader';
 import { BASE_API_URL } from '@/redux/apiSlice/constants';
 import { getAreaConfig } from '@/storage/areaConfig';
@@ -31,13 +31,19 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
       const api = axios.create({
         baseURL: BASE_API_URL,
         headers: { ...buildCommonHeader() },
+        params: {
+          'remind-day': reminderConfig.day,
+        },
       });
-      const response = await api.get(`screen/home/${areaConfig}`);
-      const homeResponse = response.data as HomeResponse;
+      const response = await api.get(
+        `schedule/${areaConfig}/reminder`,
+      );
+      const reminderResponse =
+        response.data as GetScheduleReminderResponse;
 
       await setLastReminderUpdated(new Date());
 
-      registerRemindersByReminders(homeResponse.reminders);
+      registerRemindersByReminders(reminderResponse.reminders);
     }
   }
   return BackgroundFetch.BackgroundFetchResult.NewData;

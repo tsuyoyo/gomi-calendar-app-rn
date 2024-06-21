@@ -4,6 +4,7 @@ import counterReducer from '../features/counter/counterSlice';
 import { areaApi } from './apiSlice/areaApi';
 import { homeScreenApi } from './apiSlice/homeScreenApi';
 import { infoScreenApi } from './apiSlice/infoScreenApi';
+import { reminderApi } from './apiSlice/reminderApi';
 import areaReducer from './slice/AreaSlice';
 import reminderReducer from './slice/ReminderSlice';
 
@@ -15,12 +16,14 @@ export const store = configureStore({
     [areaApi.reducerPath]: areaApi.reducer,
     [homeScreenApi.reducerPath]: homeScreenApi.reducer,
     [infoScreenApi.reducerPath]: infoScreenApi.reducer,
+    [reminderApi.reducerPath]: reminderApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(areaApi.middleware)
       .concat(homeScreenApi.middleware)
-      .concat(infoScreenApi.middleware),
+      .concat(infoScreenApi.middleware)
+      .concat(reminderApi.middleware),
   enhancers: (defaultEnhancers) =>
     __DEV__
       ? defaultEnhancers().concat(reactotron.createEnhancer())

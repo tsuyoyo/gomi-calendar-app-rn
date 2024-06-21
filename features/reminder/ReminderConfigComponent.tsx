@@ -155,22 +155,28 @@ const RemindDayConfig: React.FC = () => {
   const dayConfig = useSelector<RootState, string | undefined>(
     (s) => s.reminder.config.day,
   );
-
   return (
     <>
       <View style={styles.dayRadioButtonGroupContainer}>
         <TouchableRipple
-          onPress={() =>
-            dispatch(reminderSlice.actions.setDay('on-the-day'))
-          }
+          onPress={() => {
+            dispatch(reminderSlice.actions.setDay('day-on-the-day'));
+          }}
           disabled={!isEnabled}
         >
           <View style={styles.dayRadioButtonContainer}>
             <RadioButton
-              value="on-the-day"
+              value="day-on-the-day"
               disabled={!isEnabled}
               status={
-                dayConfig === 'on-the-day' ? 'checked' : 'unchecked'
+                dayConfig === 'day-on-the-day'
+                  ? 'checked'
+                  : 'unchecked'
+              }
+              onPress={() =>
+                dispatch(
+                  reminderSlice.actions.setDay('day-on-the-day'),
+                )
               }
             />
             <Text
@@ -193,6 +199,9 @@ const RemindDayConfig: React.FC = () => {
               disabled={!isEnabled}
               status={
                 dayConfig === 'day-before' ? 'checked' : 'unchecked'
+              }
+              onPress={() =>
+                dispatch(reminderSlice.actions.setDay('day-before'))
               }
             />
             <Text

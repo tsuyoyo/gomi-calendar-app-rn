@@ -10,7 +10,6 @@ import {
 } from './useRegisterReminders';
 
 export const registerRemindersByReminders = async (
-  remindDay: 'on-the-day' | 'day-before' | undefined,
   reminders: Reminder[],
 ) => {
   const reminderConfig = await getReminderConfig();
@@ -26,9 +25,7 @@ export const registerRemindersByReminders = async (
 
     reminderDate.setFullYear(reminder.year);
     reminderDate.setMonth(reminder.month - 1);
-    reminderDate.setDate(
-      remindDay === 'day-before' ? reminder.date - 1 : reminder.date,
-    );
+    reminderDate.setDate(reminder.date);
     reminderDate.setHours(remindHour);
     reminderDate.setMinutes(remindMin);
     reminderDate.setSeconds(0);
