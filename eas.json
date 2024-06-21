@@ -11,6 +11,9 @@
       "distribution": "internal"
     },
     "production": {
+      "env": {
+        "MY_ENVIRONMENT": "production"
+      },
       "android": {
         "image": "latest"
       },

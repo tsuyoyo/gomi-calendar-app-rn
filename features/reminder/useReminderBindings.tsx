@@ -66,12 +66,11 @@ export const useReminderBindings = (
     }
   }, [
     cancelReminders,
-    homeResponse?.reminders,
-    homeResponse?.weeklyScheduleComponents,
     dispatch,
+    homeResponse?.weeklyScheduleComponents,
+    id,
     registerReminders,
     reminderConfig,
     trigger,
-    id,
   ]);
 };
